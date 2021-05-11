@@ -20,9 +20,9 @@ Add this into your composer.json
 
 ```json
     "repositories": {
-        "wikichua/iap": {
+        "wikichua/dashing": {
             "type": "vcs",
-            "url": "https://github.com/wikichua/IAP.git"
+            "url": "https://github.com/wikichua/dashing.git"
         }
     }
 ```
@@ -34,7 +34,6 @@ mysql -uhomestead -p <<_EOF_
 CREATE DATABASE *YourDatabase*;
 _EOF_
 laravel new *YourProject*
-composer require laravel/ui
 ```
 
 Ammend your .env

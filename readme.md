@@ -11,38 +11,65 @@ This is where your description should go. Take a look at [contributing.md](contr
 
 Via Composer
 
-``` bash
-$ composer require wikichua/dashing
+Add this into your composer.json
+
+```json
+    "repositories": {
+        "wikichua/dashing": {
+            "type": "vcs",
+            "url": "https://github.com/wikichua/dashing.git"
+        }
+    }
 ```
 
-## Usage
+Run in your bash
 
-## Change log
-
-Please see the [changelog](changelog.md) for more information on what has changed recently.
-
-## Testing
-
-``` bash
-$ composer test
+```bash
+mysql -uhomestead -p <<_EOF_
+CREATE DATABASE *YourDatabase*;
+_EOF_
+laravel new *YourProject*
 ```
 
-## Contributing
+Ammend your .env
 
-Please see [contributing.md](contributing.md) for details and a todolist.
+```env
+APP_URL=https://*yourproject.test*
+DB_DATABASE=*YourDatabase*
+```
 
-## Security
+Run in your bash
 
-If you discover any security related issues, please email author email instead of using the issue tracker.
+```bash
+composer require wikichua/dashing
+php artisan storage:link
+php artisan dashing:install
+```
 
-## Credits
+In your app/User.php
 
-- [author name][link-author]
-- [All Contributors][link-contributors]
+```php
+class User extends \Wikichua\Dashing\Models\User
+```
 
-## License
+```php
+    protected $casts = [
+        'social' => 'array',
+    ];
+```
 
-license. Please see the [license file](license.md) for more information.
+Run in your bash
+
+```bash
+php artisan migrate
+npm run dev
+```
+
+In your browser
+
+Access to your https://***YourProject***.test/admin.
+Email : admin@email.com
+Password : admin123
 
 [ico-version]: https://img.shields.io/packagist/v/wikichua/dashing.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/wikichua/dashing.svg?style=flat-square
@@ -55,14 +82,3 @@ license. Please see the [license file](license.md) for more information.
 [link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/wikichua
 [link-contributors]: ../../contributors
-
-## Refer
-
-https://github.com/adminkit/adminkit
-
-## Package Development
-```bash
-laravel new *YourProject*
-composer require jeroen-g/laravel-packager --dev
-php artisan packager:git git@github.com:wikichua/dashing.git wikichua dashing
-```
