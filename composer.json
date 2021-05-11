@@ -59,10 +59,14 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Wikichua\\Dashing\\DashingServiceProvider"
+                "Wikichua\\Dashing\\DashingServiceProvider",
+                "Wikichua\\Dashing\\Providers\\HelpServiceProvider",
+                "Wikichua\\Dashing\\Providers\\BrandServiceProvider",
+                "Wikichua\\Dashing\\Providers\\ValidatorServiceProvider"
             ],
             "aliases": {
-                "Dashing": "Wikichua\\Dashing\\Facades\\Dashing"
+                "Dashing": "Wikichua\\Dashing\\Facades\\Dashing",
+                "Help": "Wikichua\\Dashing\\Facades\\Help"
             }
         }
     }

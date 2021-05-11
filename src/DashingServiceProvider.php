@@ -15,9 +15,10 @@ class DashingServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->app->register(\Wikichua\Dashing\Providers\HelpServiceProvider::class);
-        $this->app->register(\Wikichua\Dashing\Providers\BrandServiceProvider::class);
-        $this->app->register(\Wikichua\Dashing\Providers\ValidatorServiceProvider::class);
+        // moved to composer.json
+        // $this->app->register(\Wikichua\Dashing\Providers\HelpServiceProvider::class);
+        // $this->app->register(\Wikichua\Dashing\Providers\BrandServiceProvider::class);
+        // $this->app->register(\Wikichua\Dashing\Providers\ValidatorServiceProvider::class);
 
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'wikichua');
         $this->loadMiddlewares();
