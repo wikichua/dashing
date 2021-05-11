@@ -28,7 +28,14 @@
                         </div>
                     </div>
                     <div class="row">
-                    {{ $slot }}
+                        {{ $slot }}
+                    </div>
+                </div>
+                <div id="overlayLoader">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                     </div>
                 </div>
             </main>
