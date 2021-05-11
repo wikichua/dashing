@@ -293,6 +293,9 @@ class Help
 
     public function getBrandNameByHost($domain = '')
     {
+        if (!is_dir(base_path('brand'))) {
+            return null;
+        }
         $configs = Cache::tags('brand')->remember('brand-configs', (60 * 60 * 24), function () {
             $configs = [];
             $dirs = File::directories(base_path('brand'));
@@ -308,7 +311,7 @@ class Help
             return $configs;
         });
 
-        return '' == $domain ? $configs : $configs[$domain];
+        return '' == $domain ? $configs : (isset($configs[$domain]) ? $configs[$domain] : null);
     }
 
     public function getDomain($brandName = '')

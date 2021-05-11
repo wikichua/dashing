@@ -27,23 +27,23 @@ class BrandServiceProvider extends ServiceProvider
                     }
                     // load admin routes in brand
                     if (File::exists($dir.'/routes/sap')) {
-                        $files = cache()->rememberForever('setup:dashing-brand-routes-files', function () {
+                        $files = cache()->rememberForever('setup:dashing-brands-routes-files', function () use ($dir) {
                             $files = File::files($dir.'/routes/sap/');
                             $out = [];
                             foreach ($files as $file) {
                                 $out[] = $file->getPathname();
+                            }
+                            if (File::exists($dir.'/routes/sap/api')) {
+                                $files = File::files($dir.'/routes/sap/api/');
+                                foreach ($files as $file) {
+                                    $out[] = $file->getPathname();
+                                }
                             }
                             return $out;
                         });
                         foreach ($files as $file) {
                             $this->loadRoutesFrom($file);
                         }
-                        // if (File::exists($dir.'/routes/sap/api')) {
-                        //     $files = File::files($dir.'/routes/sap/api/');
-                        //     foreach ($files as $file) {
-                        //         $this->loadRoutesFrom($file);
-                        //     }
-                        // }
                     }
                 }
                 app(config('dashing.Models.Brand'))->query()->whereStatus('A')->where('expired_at', '<', date('Y-m-d 23:59:59'))->update(['status' => 'E']);

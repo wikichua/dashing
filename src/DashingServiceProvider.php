@@ -15,6 +15,10 @@ class DashingServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        $this->app->register(\Wikichua\Dashing\Providers\HelpServiceProvider::class);
+        $this->app->register(\Wikichua\Dashing\Providers\BrandServiceProvider::class);
+        $this->app->register(\Wikichua\Dashing\Providers\ValidatorServiceProvider::class);
+
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'wikichua');
         $this->loadMiddlewares();
 
@@ -27,8 +31,8 @@ class DashingServiceProvider extends ServiceProvider
             $this->bootForConsole();
         }
         $this->configSettings();
-
-        if ((isset(parse_url(config('app.url'))['host']) && parse_url(config('app.url'))['host'] == request()->getHost())) {
+        $isNotBrand = \Help::getBrandNameByHost(request()->getHost());
+        if ((isset(parse_url(config('app.url'))['host']) && parse_url(config('app.url'))['host'] == request()->getHost()) || is_null($isNotBrand)) {
             $this->loadWebRoutes();
             $this->gatePermissions();
 
@@ -44,9 +48,6 @@ class DashingServiceProvider extends ServiceProvider
         $this->app->singleton('dashing', function ($app) {
             return new Dashing;
         });
-        $this->app->register(\Wikichua\Dashing\Providers\HelpServiceProvider::class);
-        $this->app->register(\Wikichua\Dashing\Providers\BrandServiceProvider::class);
-        $this->app->register(\Wikichua\Dashing\Providers\ValidatorServiceProvider::class);
     }
     public function provides()
     {
@@ -82,29 +83,23 @@ class DashingServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->prefix(config('dashing.route.root', 'dashboard'))
             ->group(function () {
-                // load package routes
-                $packageFiles = cache()->rememberForever('setup:dashing-routes-files', function () {
+                $files = cache()->rememberForever('setup:dashing-web-routes-files', function () {
+                    // load package routes
                     $files = File::files(__DIR__.'/../routes');
                     $out = [];
                     foreach ($files as $file) {
                         $out[] = $file->getPathname();
                     }
-                    return $out;
-                });
-
-                // load app routes
-                $appFiles = [];
-                if (File::exists(app_path('../routes/dashing'))) {
-                    $appFiles = cache()->rememberForever('setup:dashing-routes-files', function () {
+                    // load app routes
+                    if (File::exists(app_path('../routes/dashing'))) {
                         $files = File::files(app_path('../routes/dashing/'));
-                        $out = [];
                         foreach ($files as $file) {
                             $out[] = $file->getPathname();
                         }
-                        return $out;
-                    });
-                }
-                $files = array_merge($packageFiles, $appFiles);
+                    }
+                    return $out;
+                });
+
                 Route::group([], function () use ($files) {
                     foreach ($files as $file) {
                         include_once $file;
@@ -112,11 +107,11 @@ class DashingServiceProvider extends ServiceProvider
                 });
             });
 
-        if (RouteServiceProvider::HOME != config('dashing.route.root', 'dashboard')) {
-            Route::redirect(RouteServiceProvider::HOME, config('dashing.route.root', 'dashboard'));
+        if (RouteServiceProvider::HOME != config('dashing.route.root', 'admin')) {
+            Route::redirect(RouteServiceProvider::HOME, config('dashing.route.root', 'admin'));
         }
-        if (config('dashing.route.root', 'dashboard') != '/') {
-            Route::redirect('/', config('dashing.route.root', 'dashboard'));
+        if (config('dashing.route.root', 'admin') != '/') {
+            Route::redirect('/', config('dashing.route.root', 'admin'));
         }
     }
 
@@ -125,16 +120,25 @@ class DashingServiceProvider extends ServiceProvider
         Route::middleware('api')
             ->prefix('api')
             ->group(function () {
-                $files = File::files(__DIR__.'/../routes/api/');
-                foreach ($files as $file) {
-                    include_once $file->getPathname();
-                }
-                if (File::exists(app_path('../routes/dashing'))) {
-                    $files = File::files(app_path('../routes/dashing/'));
+                $files = cache()->rememberForever('setup:dashing-api-routes-files', function () {
+                    $files = File::files(__DIR__.'/../routes/api/');
+                    $out = [];
                     foreach ($files as $file) {
-                        include_once $file->getPathname();
+                        $out[] = $file->getPathname();
                     }
-                }
+                    if (File::exists(app_path('../routes/dashing'))) {
+                        $files = File::files(app_path('../routes/dashing/'));
+                        foreach ($files as $file) {
+                            $out[] = $file->getPathname();
+                        }
+                    }
+                    return $out;
+                });
+                Route::group([], function () use ($files) {
+                    foreach ($files as $file) {
+                        include_once $file;
+                    }
+                });
             });
     }
 
