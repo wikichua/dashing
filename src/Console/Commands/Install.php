@@ -39,6 +39,7 @@ class Install extends Command
         ];
         $this->copiesFileOrDirectory($files);
         $this->checkCacheDriver();
+        $this->replaceRouteServiceProviderHomeConst();
         $this->replaceUserModelExtends();
         $this->injectRunCronjobsCallIntoConsoleKernel();
         $this->injectUseArtisanTraitIntoConsoleKernel();
@@ -107,6 +108,23 @@ class Install extends Command
         foreach ($data as $from => $to) {
             is_dir($from)? @File::copyDirectory($from, $to):@File::copy($from, $to);
             $this->info('Copy '.$from.' to '. $to);
+            $this->newLine();
+        }
+    }
+
+    protected function replaceRouteServiceProviderHomeConst()
+    {
+        $file = app_path('Providers/RouteServiceProvider.php');
+        $lines = explode(PHP_EOL, @File::get($file));
+        foreach ($lines as $key => $line) {
+            if (str_contains($line, 'public const HOME')) {
+                $from = $line;
+                $to = $lines[$key] = "\tpublic const HOME = '/';";
+            }
+        }
+        if (isset($from) && '' != $from) {
+            @File::replace($file, implode(PHP_EOL, $lines));
+            $this->info('Replace '.trim($from).' to '. trim($to) . ' in ' . $file);
             $this->newLine();
         }
     }
