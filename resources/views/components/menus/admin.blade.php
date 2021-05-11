@@ -1,5 +1,5 @@
 @php
-    $id = 'admin';
+    $id = 'admin-menu';
     foreach ($attributes as $key => $val) {
         $$key = $val;
     }

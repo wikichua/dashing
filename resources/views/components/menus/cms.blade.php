@@ -1,5 +1,5 @@
 @php
-    $id = 'cms';
+    $id = 'cms-menu';
     foreach ($attributes as $key => $val) {
         $$key = $val;
     }
