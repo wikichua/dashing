@@ -1,0 +1,42 @@
+$choices-font-size-lg: $input-font-size-lg;
+$choices-font-size-md: $input-font-size;
+$choices-font-size-sm: $input-font-size-sm;
+$choices-guttering: $grid-gutter-width;
+
+$choices-border-radius: 0;
+$choices-border-radius-item: 0;
+@if $enable-rounded {
+    $choices-border-radius: $input-border-radius;
+    $choices-border-radius-item: $badge-border-radius;
+}
+
+$choices-bg-color: $input-bg;
+$choices-bg-color-disabled: $input-disabled-bg;
+$choices-bg-color-dropdown: $input-bg;
+$choices-text-color: $input-color;
+$choices-keyline-color: $input-border-color;
+$choices-primary-color: $primary;
+$choices-disabled-color: $input-disabled-bg;
+
+@import "~choices.js/src/styles/choices.scss";
+
+.#{$choices-selector} {
+  margin-bottom: 0px !important;
+}
+
+.#{$choices-selector}__inner {
+  padding: 0px !important;
+  min-height: 0px !important;
+}
+
+/*.choices__inner {
+    color: $choices-text-color; // For some reason this needs to be manually specified or it grabs the body color?
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    padding-left: 8px !important;
+    min-height: 28px !important;
+}
+.choices__list--single {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}*/

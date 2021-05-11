@@ -1,0 +1,68 @@
+/*@import "~@fortawesome/fontawesome-free/css/all.min.css";*/
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+// Variables
+@import "1-variables/variables";
+@import "1-variables/custom";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap/scss/grid.scss";
+@import "~bootstrap/scss/utilities.scss";
+@import "~bootstrap/scss/reboot.scss";
+
+// Theme mixins
+@import "2-mixins/button";
+@import "2-mixins/modal";
+@import "2-mixins/switch";
+
+// Theme components
+@import "3-components/accordion";
+@import "3-components/alert";
+@import "3-components/avatar";
+@import "3-components/buttons";
+@import "3-components/card";
+@import "3-components/chart";
+@import "3-components/content";
+@import "3-components/dropdown";
+@import "3-components/feather";
+@import "3-components/footer";
+@import "3-components/forms";
+@import "3-components/hamburger";
+@import "3-components/list-group";
+@import "3-components/main";
+@import "3-components/navbar";
+@import "3-components/reboot";
+@import "3-components/sidebar";
+@import "3-components/sizing";
+@import "3-components/tables";
+@import "3-components/type";
+@import "3-components/wrapper";
+
+// Theme utilities
+@import "4-utilities/background";
+@import "4-utilities/borders";
+@import "4-utilities/cursors";
+@import "4-utilities/overflow";
+
+// 3rd party plugins
+@import "~jsvectormap/dist/css/jsvectormap";
+@import "~simplebar/dist/simplebar";
+
+// 3rd party plugin styles
+@import "5-vendor/simplebar";
+
+// date range picker
+@import '~bootstrap-daterangepicker/daterangepicker.css';
+@import '~sweetalert2/src/sweetalert2.scss';
+@import '~summernote/dist/summernote.css';
+@import '~bootstrap-table/src/bootstrap-table.scss';
+@import '~bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header.css';
+@import '~bootstrap-table/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.css';
+@import '~gijgo/css/gijgo.css';
+@import '~simplemde/dist/simplemde.min.css';
+@import '~tom-select/dist/css/tom-select.bootstrap5.css';
