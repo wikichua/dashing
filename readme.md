@@ -5,7 +5,7 @@
 [![Build Status][ico-travis]][link-travis]
 [![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [progress.md](wiki/progress.md) to see a to do list.
+This is where your description should go. Take a look at [progress](wiki/Progress.md) to see a to do list.
 
 ## Installation
 
