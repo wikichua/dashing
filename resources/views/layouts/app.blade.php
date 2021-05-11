@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div id="overlayLoader">
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center position-absolute top-50 start-50 translate-middle text-white">
                         <div class="spinner-border" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
