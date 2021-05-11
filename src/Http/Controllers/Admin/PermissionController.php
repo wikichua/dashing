@@ -29,6 +29,11 @@ class PermissionController extends Controller
         if ($request->ajax()) {
             $models = app(config('dashing.Models.Permission'))->query()
                 ->checkBrand()
+                ->select([
+                    'group',
+                    \DB::raw('min(`id`) as id'),
+                    \DB::raw('GROUP_CONCAT(" ",`name`) as "name"'),
+                ])->groupby('group')
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''))
             ;
@@ -70,17 +75,22 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => [
+                'required',
+                'at_least:1',
+                'all_filled'
+            ],
             'group' => 'required',
         ]);
+        foreach ($request->input('name') as $value) {
+            $request->merge([
+                'created_by' => auth()->id(),
+                'updated_by' => auth()->id(),
+                'name' => str_slug($value),
+            ]);
 
-        $request->merge([
-            'created_by' => auth()->id(),
-            'updated_by' => auth()->id(),
-            'name' => str_slug($request->input('name')),
-        ]);
-
-        $model = app(config('dashing.Models.Permission'))->create($request->all());
+            $model = app(config('dashing.Models.Permission'))->create($request->all());
+        }
 
         sendAlert([
             'brand_id' => 0,
@@ -118,8 +128,8 @@ class PermissionController extends Controller
             $trail->push('Edit Permission');
         });
         $model = app(config('dashing.Models.Permission'))->query()->findOrFail($id);
-
-        return view('dashing::admin.permission.edit', compact('model'));
+        $permissions = app(config('dashing.Models.Permission'))->query()->where('group', $model->group)->pluck('name', 'id');
+        return view('dashing::admin.permission.edit', compact('model', 'permissions'));
     }
 
     public function update(Request $request, $id)
@@ -166,7 +176,7 @@ class PermissionController extends Controller
             'receiver_id' => 0,
             'icon' => $model->menu_icon,
         ]);
-        $model->delete();
+        app(config('dashing.Models.Permission'))->where('group', $model->group)->delete();
 
         return response()->json([
             'status' => 'success',

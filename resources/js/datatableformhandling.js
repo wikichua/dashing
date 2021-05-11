@@ -49,7 +49,7 @@ const flashMessage = function() {
 const commitPost = function(form) {
     let action = form.attr('action');
     if (_.isUndefined(action) === false) {
-        form.find('.form-control,.form-control-plaintext').removeClass('is-invalid').addClass('is-valid');
+        // form.find('.form-control,.form-control-plaintext').removeClass('is-invalid').addClass('is-valid');
         $('.invalid-feedback').hide();
         fireRequest(form, action);
     }
@@ -119,12 +119,12 @@ const fireRequest = function(form, action) {
         let errors = resp.errors;
         let message = resp.message;
         _.forEach(errors, function(array, fieldname) {
-            $('[name=' + fieldname + ']').addClass('is-invalid');
+            // $('[name=' + fieldname + ']').addClass('is-invalid');
             $('#' + fieldname + '-alert').html(_.join(array, "<br>")).show();
         });
         Toast.fire({
             icon: 'error',
-            title: 'Opps! Something went wrong!'
+            title: 'Whoops! Something went wrong!'
         });
     }).finally(() => {
         // TODO

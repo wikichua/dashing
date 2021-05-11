@@ -19,9 +19,6 @@
   data-show-columns="true"
   data-show-toggle="true"
   data-resizable="true"
-  data-sticky-header="true"
-  data-sticky-header-offset-left="16.8em"
-  data-sticky-header-offset-right="2.8em"
   >
   <thead class="table-dark">
     <tr>

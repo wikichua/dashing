@@ -15,7 +15,7 @@
                 <x-dashing::input-field type="number" name="seq" id="seq" label="Ordering" :value="$model->seq ?? '1'"/>
                 <x-dashing::input-field type="text" name="icon" id="icon" label="Icon" :value="$model->icon ?? ''"/>
                 @include('dashing::admin.nav.routeSlugSelect')
-                <x-dashing::multi-rows-input type="text" label="Route Params" :options="$model->route_params ?? ['']" name="route_params" rows="1" />
+                <x-dashing::multi-rows-input-field type="text" label="Route Params" :options="$model->route_params ?? ['']" name="route_params" rows="1" />
                 <x-dashing::select-field name="status" id="status" label="Status" :options="settings('nav_status')" :selected="$model->status ?? []"/>
                 <x-dashing::button-field class="btn btn-primary">Submit</x-dashing::button-field>
             </x-dashing::form>

@@ -14,9 +14,9 @@
                 <x-dashing::select-field name="locale" id="locale" label="Locale" :options="settings('locales')" :selected="$model->locale ?? []"/>
                 <x-dashing::input-field type="text" name="name" id="name" label="Name" :value="$model->name ?? ''"/>
                 <x-dashing::input-field type="text" name="slug" id="slug" label="Slug" :value="$model->slug ?? ''"/>
-                <x-dashing::multi-rows-input type="textarea" label="Styles" :options="$model->styles ?? ['']" name="styles" rows="1" />
+                <x-dashing::multi-rows-input-field type="textarea" label="Styles" :options="$model->styles ?? ['']" name="styles" rows="1" />
                 <x-dashing::editor-field name="blade" id="blade" label="Content" :value="$model->blade ?? ''" :codeview='false'/>
-                <x-dashing::multi-rows-input type="textarea" label="Scripts" :options="$model->scripts ?? ['']" name="scripts" rows="1" />
+                <x-dashing::multi-rows-input-field type="textarea" label="Scripts" :options="$model->scripts ?? ['']" name="scripts" rows="1" />
                 <x-dashing::date-field name="published_at" id="published_at" label="Published Date" :value="$model->published_at ?? ''"/>
                 <x-dashing::date-field name="expired_at" id="expired_at" label="Expired Date" :value="$model->expired_at ?? ''"/>
                 <x-dashing::select-field name="status" id="status" label="Status" :options="settings('page_status')" :selected="$model->status ?? []"/>

@@ -9,7 +9,7 @@
         <div class="px-5">
             <x-dashing::form ajax="true" method="POST" action="{{ route('permission.store') }}">
                 <x-dashing::input-field type="text" name="group" id="group" label="Group" value=""/>
-                <x-dashing::input-field type="text" name="name" id="name" label="Name" value=""/>
+                <x-dashing::multi-rows-input-field type="input" label="Permissions" :options="['']" name="name" rows="1" />
                 <x-dashing::button-field class="btn btn-primary">Submit</x-dashing::button-field>
             </x-dashing::form>
         </div>

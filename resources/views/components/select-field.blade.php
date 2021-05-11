@@ -16,7 +16,7 @@
             <option value="{{ $key }}" {{ isset($selected) && in_array($key, $selected)? 'selected':'' }}>{{ $val }}</option>
             @endforeach
         </select>
-        <span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"></span>
+        <x-dashing::input-error name="{{ $name }}"/>
     </div>
 </div>
 @push('scripts')

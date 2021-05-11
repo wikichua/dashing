@@ -7,6 +7,6 @@
 		name="{{ $name }}"
 		{{ $attributes->merge(['class' => 'form-control']) }}
         >{{ html_entity_decode($value ?? '') }}</textarea>
-	<span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"></span>
+	<x-dashing::input-error name="{{ $name }}"/>
     </div>
 </div>
