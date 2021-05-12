@@ -73,6 +73,8 @@ Access to your https://***YourProject***.test/admin.
 Email : admin@email.com
 Password : admin123
 
+[Live Demo](https://dashing.latteichi.net)
+
 [ico-version]: https://img.shields.io/packagist/v/wikichua/dashing.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/wikichua/dashing.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/wikichua/dashing/master.svg?style=flat-square
