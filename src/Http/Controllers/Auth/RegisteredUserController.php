@@ -38,11 +38,15 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|confirmed|min:8',
         ]);
 
+        $role = app(config('dashing.Models.Role'))->where('name', 'Reader')->first();
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->roles()->sync($role->id);
 
         event(new Registered($user));
 
