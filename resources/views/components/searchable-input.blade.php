@@ -1,4 +1,5 @@
-<form class="d-inline-block" action="{{ route('global.search') }}">
+@props(['style' => ''])
+<form class="d-inline-block" action="{{ route('global.search') }}"  style="margin-top: -8rem;" >
     <div class="input-group input-group-navbar">
         <input type="text" class="form-control" placeholder="Search…" aria-label="Search" name="q" value="{{ request()->input('q','') }}" id="globalSearch" autocomplete="off">
         <button class="btn" type="button">

@@ -18,8 +18,8 @@
             <div class="main">
             @include('dashing::layouts.navbar')
             <main class="content">
-                <div class="container-fluid p-0">
-                    <div class="row mb-2 mb-xl-3">
+                <div class="container-fluid p-0" style="position:absolute; top:6.5rem; width: 80% !important;">
+                    <div class="row mb-1 mb-xl-1">
                         <div class="col-auto d-none d-sm-block">
                             <h1 class="h3 mb-3">{{ $header ?? '' }}</h1>
                         </div>

@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand navbar-light navbar-bg">
-    <a class="sidebar-toggle d-flex">
+<nav class="navbar navbar-expand navbar-light navbar-bg bg-gradient" style="background-color: #93c5fd; min-height: 13.5rem;">
+    <a class="sidebar-toggle d-flex" style="margin-top: -8rem;">
         <i class="hamburger align-self-center"></i>
     </a>
 
     <x-dashing::searchable-input />
 
-    <div class="navbar-collapse collapse">
+    <div class="navbar-collapse collapse" style="margin-top: -8rem;">
         <ul class="navbar-nav navbar-align">
             <x-dashing::notification />
             <li class="nav-item dropdown">

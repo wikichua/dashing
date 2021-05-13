@@ -1,13 +1,13 @@
 <nav id="sidebar" class="sidebar">
-    <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="{{ route('dashboard') }}">
+    <div class="sidebar-content js-simplebar bg-light">
+        <a class="sidebar-brand text-dark" href="{{ route('dashboard') }}">
             <x-dashing::application-logo />
             <span class="align-middle">{{ config('app.name','Laravel') }}</span>
         </a>
 
-        <ul class="sidebar-nav">
+        <ul class="sidebar-nav bg-light">
             <x-dashing::nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                <i class="align-middle" data-feather="sliders"></i>  <span class="align-middle">{{ __('Dashboard') }}</span>
+                <i class="align-middle text-dark" data-feather="sliders"></i><span class="align-middle">{{ __('Dashboard') }}</span>
             </x-dashing::nav-link>
 
             <x-dashing::admin-menu />

@@ -13,9 +13,9 @@
     'read-files',
     'read-pushers',
 ])
-<li class="sidebar-item">
-    <a href="#{{ $id }}" data-bs-toggle="collapse" class="sidebar-link {{ $groupActive? '':'collapsed' }}">
-        <i class="align-middle" data-feather="database"></i> <span class="align-middle">CMS</span>
+<li class="sidebar-item {{ $groupActive? 'active':'' }}">
+    <a href="#{{ $id }}" data-bs-toggle="collapse" class="sidebar-link {{ $groupActive? '':'collapsed' }} bg-light text-dark">
+        <i class="align-middle text-dark" data-feather="database"></i> <span class="align-middle">CMS</span>
     </a>
     <ul id="{{ $id }}" class="sidebar-dropdown list-unstyled {{ $groupActive? '':'collapse' }} " data-bs-parent="#sidebar">
             @can('read-brands')

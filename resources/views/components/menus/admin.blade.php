@@ -17,9 +17,9 @@
     'read-mailers',
     'read-versionizers',
 ])
-<li class="sidebar-item">
-    <a href="#{{ $id }}" data-bs-toggle="collapse" class="sidebar-link {{ $groupActive? '':'collapsed' }}">
-        <i class="align-middle" data-feather="cpu"></i> <span class="align-middle">Administrative</span>
+<li class="sidebar-item {{ $groupActive? 'active':'' }}">
+    <a href="#{{ $id }}" data-bs-toggle="collapse" class="sidebar-link {{ $groupActive? '':'collapsed' }} bg-light text-dark">
+        <i class="align-middle text-dark" data-feather="cpu"></i> <span class="align-middle">Administrative</span>
     </a>
     <ul id="{{ $id }}" class="sidebar-dropdown list-unstyled {{ $groupActive? '':'collapse' }} " data-bs-parent="#sidebar">
             @can('read-users')

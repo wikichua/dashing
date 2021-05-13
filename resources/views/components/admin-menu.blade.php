@@ -42,7 +42,7 @@
 @if (Route::has('wiki.home'))
 @can('read-wiki-docs')
 <x-dashing::nav-link :href="route('wiki.home')" :active="request()->routeIs('wiki.home')">
-    <i class="align-middle fab fa-wikipedia-w"></i><span class="align-middle">Wiki Docs</span>
+    <i class="align-middle fab fa-wikipedia-w text-dark"></i><span class="align-middle">Wiki Docs</span>
 </x-dashing::nav-link>
 @endcan
 @endif
