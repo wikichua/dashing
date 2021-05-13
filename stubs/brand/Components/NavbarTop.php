@@ -15,8 +15,8 @@ class NavbarTop extends Component
     }
     public function render()
     {
-        $brand_id = brand($this->brand)->id;
-        $brand_name = strtolower(brand($this->brand)->name);
+        $brand_id = getBrand($this->brand)->id;
+        $brand_name = strtolower(getBrand($this->brand)->name);
         $navs = app(config('dashing.Models.Nav'))->query()
             ->where('status', 'A')
             ->where('locale', app()->getLocale())
@@ -24,6 +24,6 @@ class NavbarTop extends Component
             ->where('group_slug', $this->group_slug)
             ->orderBy('seq')
             ->get();
-        return view('{%brand_string%}::components.navbar-top', compact('navs','brand_name'));
+        return view('{%brand_string%}::components.navbar-top', compact('navs', 'brand_name'));
     }
 }

@@ -48,29 +48,32 @@ class BrandServiceProvider extends ServiceProvider
                 }
                 app(config('dashing.Models.Brand'))->query()->whereStatus('A')->where('expired_at', '<', date('Y-m-d 23:59:59'))->update(['status' => 'E']);
             } else {
-                $this->loadBrandStuffs();
+                // $this->loadBrandStuffs();
+                $this->registerBrandServiceProviders();
             }
         }
     }
 
-    protected function registerBrandServiceProviders($dir)
+    protected function registerBrandServiceProviders()
     {
-        $brandName = basename($dir);
-        if (File::isDirectory($dir.'/Providers')) {
-            $files = File::files($dir.'/Providers');
-            foreach ($files as $file) {
-                if (str_contains($file->getFilename(), 'ServiceProvider.php')) {
+        if (File::exists(base_path('brand'))) {
+            $brandName = \Help::getBrandNameByHost(request()->getHost());
+            $brandPublished = \Help::getPublishedBrand($brandName);
+            $dir = base_path('brand/'.$brandPublished->name);
+            if ($brandPublished && File::isDirectory($dir.'/Providers')) {
+                $files = File::files($dir.'/Providers');
+                foreach ($files as $file) {
                     [$namespace, $class] = array_values(preg_grep('/class|namespace/', explode(PHP_EOL, File::get($file->getPathname()))));
                     $class = explode(' ', $class)[1];
                     $namespace = '\\'.str_replace(['namespace ', ';'], '', $namespace).'\\'.$class;
                     $this->app->register($namespace);
                 }
             }
+            $this->loadMigrationsFrom($dir.'/database');
         }
-        $this->loadMigrationsFrom($dir.'/database');
     }
 
-    protected function loadBrandStuffs()
+    /*protected function loadBrandStuffs()
     {
         if (File::exists(base_path('brand'))) {
             $brandName = \Help::getBrandNameByHost(request()->getHost());
@@ -82,11 +85,11 @@ class BrandServiceProvider extends ServiceProvider
                     // $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');
                     // $dotenv->load();
                     // $this->app->loadEnvironmentFrom($dir.'/.env');
-                    \Route::middleware('web')->group($dir.'/routes/web.php');
+                    // \Route::middleware('web')->group($dir.'/routes/web.php');
                     // $this->loadTranslationsFrom($dir.'/lang', $brandName);
                     // $this->loadViewsFrom($dir, $brandName);
                 }
             }
         }
-    }
+    }*/
 }

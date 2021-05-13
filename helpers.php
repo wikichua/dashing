@@ -129,6 +129,7 @@ if (!function_exists('route_slug')) {
 if (!function_exists('getBrandNameByHost')) {
     function getBrandNameByHost($domain = '')
     {
+        $domain = empty($domain) ? request()->getHost() : $domain;
         return Help::getBrandNameByHost($domain);
     }
 }
@@ -138,10 +139,10 @@ if (!function_exists('getDomain')) {
         return Help::getDomain($brandName);
     }
 }
-if (!function_exists('brand')) {
-    function brand($brandName = '')
+if (!function_exists('getPublishedBrand')) {
+    function getPublishedBrand($brandName = '')
     {
-        return Help::brand($brandName);
+        return Help::getPublishedBrand($brandName);
     }
 }
 if (!function_exists('renderSlug')) {

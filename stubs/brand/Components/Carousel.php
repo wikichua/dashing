@@ -18,7 +18,7 @@ class Carousel extends Component
     public function render()
     {
         $uniqueId = \Str::uuid();
-        $brand_id = brand($this->brand)->id;
+        $brand_id = getBrand($this->brand)->id;
         $carousels = app(config('dashing.Models.Carousel'))->query()
             ->where('status', 'A')
             ->where('brand_id', $brand_id)
@@ -26,6 +26,6 @@ class Carousel extends Component
             ->whereJsonContains('tags', $this->tags)
             ->orderBy('seq')
             ->get();
-        return view('{%brand_string%}::components.carousel', compact('carousels','uniqueId'));
+        return view('{%brand_string%}::components.carousel', compact('carousels', 'uniqueId'));
     }
 }

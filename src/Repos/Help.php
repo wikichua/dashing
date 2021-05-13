@@ -326,7 +326,7 @@ class Help
         return $return;
     }
 
-    public function brand($brandName = '')
+    public function getPublishedBrand($brandName = '')
     {
         $brandName = '' != $brandName ? $brandName : $this->getBrandNameByHost(request()->getHost());
 

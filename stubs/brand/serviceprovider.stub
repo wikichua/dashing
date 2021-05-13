@@ -26,12 +26,26 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
     }
     public function boot()
     {
-        $this->app['router']->aliasMiddleware('{%brand_string%}', 'Brand\{%brand_name%}\Middlewares\AuthMiddleware');
+        $this->loadRoutesStuffs();
+        $this->loadViewsStuffs();
+        $this->loadTranslationsFrom(base_path('brand/{%brand_name%}/resources/lang'), '{%brand_string%}');
+    }
 
+    protected function loadRoutesStuffs()
+    {
+        $brandHost = \Help::getBrandNameByHost();
+        if (!is_null($brandHost)) {
+            Route::redirect('/', config('main.route_root', '/en'));
+        }
+        Route::middleware('web')->group(base_path('brand/{%brand_name%}/routes/web.php'));
+        $this->app['router']->aliasMiddleware('{%brand_string%}', 'Brand\{%brand_name%}\Middlewares\AuthMiddleware');
+        $this->app['router']->pushMiddlewareToGroup('web', \Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware::class);
+    }
+
+    protected function loadViewsStuffs()
+    {
         View::addNamespace('{%brand_string%}', config('main.resources_path',base_path('brand/{%brand_name%}/resources/views')));
         Blade::componentNamespace('Brand\\{%brand_name%}\\Components', '{%brand_string%}');
         // <x-{%brand_string%}::component-name />
-        $this->loadTranslationsFrom(base_path('brand/{%brand_name%}/resources/lang'), '{%brand_string%}');
-        $this->app['router']->pushMiddlewareToGroup('web', \Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware::class);
     }
 }
