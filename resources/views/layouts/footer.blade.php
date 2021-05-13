@@ -3,7 +3,7 @@
         <div class="row text-muted">
             <div class="col-6 text-start">
                 <p class="mb-0">
-                    <a href="{{ route('dashboard') }}" class="text-muted"><strong>{{ config('app.name','Laravel') }}</strong></a> &copy;
+                    <a href="{{ route('dashboard') }}" class="text-muted"><strong>{{ config('app.name','Laravel') }}</strong> - Powered by Wikichua</a> &copy;
                 </p>
             </div>
             {{-- <div class="col-6 text-end">
