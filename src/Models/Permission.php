@@ -52,7 +52,7 @@ class Permission extends Model
 
     public function scopeFilterGroup($query, $search)
     {
-        return $query->where('group', 'like', "%{$search}%");
+        return $query->whereIn('group', $search);
     }
 
     public function getReadUrlAttribute($value)
