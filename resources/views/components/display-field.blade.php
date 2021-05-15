@@ -51,8 +51,10 @@
                 @endforelse
                 @break
             @case('code')
-                    @if (is_array($value) || json_decode($value))
+                    @if (!is_array($value) && json_decode($value))
                     <pre class="text-muted">@json(json_decode($value), JSON_PRETTY_PRINT)</pre>
+                    @elseif(is_array($value))
+                    <pre class="text-muted">@json($value, JSON_PRETTY_PRINT)</pre>
                     @else
                     <pre class="text-muted">{!! $value !!}</pre>
                     @endif
