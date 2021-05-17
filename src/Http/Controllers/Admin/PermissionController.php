@@ -88,7 +88,6 @@ class PermissionController extends Controller
                 'updated_by' => auth()->id(),
                 'name' => str_slug($value),
             ]);
-
             $model = app(config('dashing.Models.Permission'))->create($request->all());
         }
 
@@ -134,18 +133,40 @@ class PermissionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $model = app(config('dashing.Models.Permission'))->query()->findOrFail($id);
-
         $request->validate([
-            'name' => 'required',
+            'name' => [
+                'required',
+                'at_least:1',
+                'all_filled'
+            ],
             'group' => 'required',
         ]);
-
-        $request->merge([
-            'updated_by' => auth()->id(),
-        ]);
-
-        $model->update($request->all());
+        $model = app(config('dashing.Models.Permission'))->find($id);
+        $permissions = app(config('dashing.Models.Permission'))->where('group', $model->group)->pluck('name')->toArray();
+        $group = $request->input('group');
+        $input_permissions = collect($request->input('name'))->toArray();
+        // delete
+        $deleted_permissions = array_diff($permissions, $input_permissions);
+        app(config('dashing.Models.Permission'))->where('group', $model->group)->whereIn('name', $deleted_permissions)->delete();
+        // new
+        $new_permissions = array_diff($input_permissions, $permissions);
+        foreach ($new_permissions as $permission) {
+            app(config('dashing.Models.Permission'))->create([
+                'group' => $group,
+                'name' => str_slug(strtolower($permission)),
+                'created_by' => auth()->id(),
+                'updated_by' => auth()->id(),
+            ]);
+        }
+        // update
+        $update_permissions = array_diff($input_permissions, array_merge($deleted_permissions, $new_permissions));
+        foreach ($update_permissions as $permission) {
+            app(config('dashing.Models.Permission'))->update([
+                'group' => $group,
+                'name' => str_slug(strtolower($permission)),
+                'updated_by' => auth()->id(),
+            ]);
+        }
 
         sendAlert([
             'brand_id' => 0,
