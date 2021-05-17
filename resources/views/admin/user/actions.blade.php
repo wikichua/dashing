@@ -15,7 +15,7 @@
         </x-dashing::form>
         @endcan
 
-        @can('Impersonate Users')
+        @can('impersonate-users')
             @if ($model->hasPermission('access-admin-panel',$model->id))
         <a href="{{ route('impersonate', $model->id) }}" class="btn btn-link text-secondary p-1" title="Read"><i class="fas fa-lg fa-people-arrows"></i></a>
             @endif

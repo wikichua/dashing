@@ -13,7 +13,7 @@ class UserController extends Controller
         $this->middleware('intend_url')->only(['index', 'read']);
         $this->middleware('can:create-users')->only(['create', 'store']);
         $this->middleware('can:read-users')->only(['index', 'read']);
-        $this->middleware('can:Update Users')->only(['edit', 'update']);
+        $this->middleware('can:update-users')->only(['edit', 'update']);
         $this->middleware('can:update-users-password')->only(['editPassword', 'updatePassword']);
         $this->middleware('can:delete-users')->only('destroy');
 

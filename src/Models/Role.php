@@ -42,7 +42,7 @@ class Role extends Model
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = route('role.show', $this->id);
+        return $this->readUrl = isset($this->id)? route('role.show', $this->id):null;
     }
 
     public function onCachedEvent()
