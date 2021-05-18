@@ -1,7 +1,7 @@
-<x-dashing::checkbox-field name="multipleTypes" id="multipleTypes" label="Toggle to switch to multiple values" :value="true" >Multiple values</x-dashing::checkbox-field>
+<x-dashing::checkbox-field name="multipleTypes" id="multipleTypes" label="Multiple values" :value="true" >Yes</x-dashing::checkbox-field>
 <div class="mb-3 row">
-    <label class="col-form-label col-sm-2 text-sm-end">Value</label>
-    <div class="col-sm-10">
+    <label class="col-form-label col-sm-3 text-sm-end">Value</label>
+    <div class="col-sm-9">
         <div class="form-control-plaintext h-auto">
             <div id="singleValue">
                 <textarea name="value" id="value" class="form-control" rows="1">{{ isset($model->value) && !is_array($model->value)?  $model->value:'' }}</textarea>
@@ -80,13 +80,9 @@ $(function () {
         if (isMultiple) {
             $('#singleValue').hide();
             $('#multipleValues').show();
-            $('[for=multipleTypes]').html('Multiple values');
-            $('#multipleTypes-label').html('Toggle to switch to single value');
         } else {
             $('#singleValue').show();
             $('#multipleValues').hide();
-            $('[for=multipleTypes]').html('Single value');
-            $('#multipleTypes-label').html('Toggle to switch to mulitple values');
         }
     });
     @if (isset($model->value) && is_array($model->value))
