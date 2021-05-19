@@ -11,7 +11,7 @@
                     @foreach ($model->value as $index => $val)
                     <div class="row mb-1">
                         <div class="col-4 d-flex justify-content-center">
-                            <input type="text" name="indexes[]" class="form-control" required placeholder="index" value="{{ $index }}">
+                            <input type="text" name="keys[]" class="form-control" required placeholder="index" value="{{ $index }}">
                         </div>
                         <div class="col-7 d-flex justify-content-center">
                             <textarea type="text" name="values[]" class="form-control" placeholder="value" rows="1">{{ $val }}</textarea>
@@ -27,7 +27,7 @@
                 @else
                 <div class="row mb-1">
                     <div class="col-4 d-flex justify-content-center">
-                        <input type="text" name="indexes[]" class="form-control" required placeholder="index">
+                        <input type="text" name="keys[]" class="form-control" required placeholder="index">
                     </div>
                     <div class="col-7 d-flex justify-content-center">
                         <textarea type="text" name="values[]" class="form-control" placeholder="value" rows="1"></textarea>
@@ -48,7 +48,7 @@
 <script id="template" type="text/x-lodash-template">
 <div class="row mb-1">
     <div class="col-4 d-flex justify-content-center">
-        <input type="text" name="indexes[]" class="form-control" required placeholder="index">
+        <input type="text" name="keys[]" class="form-control" required placeholder="index">
     </div>
     <div class="col-7 d-flex justify-content-center">
         <textarea type="text" name="values[]" class="form-control" placeholder="value" rows="1"></textarea>

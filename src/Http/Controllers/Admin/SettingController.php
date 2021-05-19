@@ -75,7 +75,7 @@ class SettingController extends Controller
         ]);
 
         if (true == $request->get('multipleTypes', false)) {
-            $request->merge(['value' => array_combine($request->get('indexes', []), $request->get('values', []))]);
+            $request->merge(['value' => array_combine($request->get('keys', []), $request->get('values', []))]);
         }
 
         if (false == $request->has('protected')) {
@@ -135,7 +135,7 @@ class SettingController extends Controller
         $model = app(config('dashing.Models.Setting'))->query()->findOrFail($id);
 
         if (true == $request->get('multipleTypes', false)) {
-            $request->merge(['value' => array_combine($request->get('indexes', []), $request->get('values', []))]);
+            $request->merge(['value' => array_combine($request->get('keys', []), $request->get('values', []))]);
         }
 
         if (false == $request->has('protected')) {
