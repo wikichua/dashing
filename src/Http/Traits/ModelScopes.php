@@ -73,4 +73,34 @@ trait ModelScopes
 
         return compact('start_at', 'stop_at');
     }
+
+    public function scopeFilterCreatedAt($query, $search)
+    {
+        $date = $this->getDateFilter($search);
+
+        return $query->whereBetween('created_at', [
+            $this->inUserTimezone($date['start_at']),
+            $this->inUserTimezone($date['stop_at']),
+        ]);
+    }
+
+    public function scopeFilterUpdatedAt($query, $search)
+    {
+        $date = $this->getDateFilter($search);
+
+        return $query->whereBetween('updated_at', [
+            $this->inUserTimezone($date['start_at']),
+            $this->inUserTimezone($date['stop_at']),
+        ]);
+    }
+
+    public function scopeFilterDeletedAt($query, $search)
+    {
+        $date = $this->getDateFilter($search);
+
+        return $query->whereBetween('deleted_at', [
+            $this->inUserTimezone($date['start_at']),
+            $this->inUserTimezone($date['stop_at']),
+        ]);
+    }
 }
