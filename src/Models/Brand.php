@@ -46,7 +46,7 @@ class Brand extends Model
 
     public function getStatusNameAttribute($value)
     {
-        return settings('brand_status')[$this->attributes['status']];
+        return isset($this->attributes['status']) ? settings('brand_status')[$this->attributes['status']]:'';
     }
 
     public function scopeFilterName($query, $search)
@@ -86,7 +86,7 @@ class Brand extends Model
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = route('brand.show', $this->id);
+        return $this->readUrl = isset($this->id) ? route('brand.show', $this->id):'';
     }
 
     public function onCachedEvent()
