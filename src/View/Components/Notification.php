@@ -4,7 +4,7 @@ namespace Wikichua\Dashing\View\Components;
 
 use Illuminate\View\Component;
 
-class AlertMenu extends Component
+class Notification extends Component
 {
     public function __construct()
     {
@@ -16,6 +16,6 @@ class AlertMenu extends Component
             ->checkBrand()->orderBy('created_at', 'desc')->where('receiver_id', auth()->id())->take(25)->get();
         $unread_count = $alerts->where('status', 'u')->count();
 
-        return view('dashing::components.alert-menu')->with(compact('alerts', 'unread_count'));
+        return view('dashing::components.notification')->with(compact('alerts', 'unread_count'));
     }
 }
