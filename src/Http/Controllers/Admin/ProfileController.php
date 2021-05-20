@@ -16,7 +16,7 @@ class ProfileController extends Controller
     public function show(Request $request)
     {
         $model = auth()->user();
-        $last_activity = $model->activitylogs()->first();
+        $last_activity = $model->audit()->first();
         $model->last_activity = [
             'datetime' => $last_activity->created_at,
             'message' => $last_activity->message,
@@ -31,6 +31,12 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         $model = auth()->user();
+        $last_activity = $model->audit()->first();
+        $model->last_activity = [
+            'datetime' => $last_activity->created_at,
+            'message' => $last_activity->message,
+            'iplocation' => $last_activity->iplocation,
+        ];
         \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->push('Edit My Profile / Change Password', route('profile.edit'));
         });

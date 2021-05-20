@@ -67,7 +67,7 @@ abstract class User extends Authenticatable
         return $this->readUrl = route('user.show', $this->id);
     }
 
-    public function activitylogs()
+    public function audit()
     {
         return $this->hasMany(config('dashing.Models.Audit'), 'user_id', 'id')->orderBy('created_at', 'desc');
     }

@@ -122,7 +122,7 @@ class UserController extends Controller
             $trail->push('Show User');
         });
         $model = app(config('dashing.Models.User'))->query()->findOrFail($id);
-        $last_activity = $model->activitylogs()->first();
+        $last_activity = $model->audit()->first();
         $model->last_activity = [
             'datetime' => $last_activity->created_at ?? '',
             'message' => $last_activity->message ?? '',
@@ -139,6 +139,12 @@ class UserController extends Controller
             $trail->push('Edit User');
         });
         $model = app(config('dashing.Models.User'))->query()->findOrFail($id);
+        $last_activity = $model->audit()->first();
+        $model->last_activity = [
+            'datetime' => $last_activity->created_at ?? '',
+            'message' => $last_activity->message ?? '',
+            'iplocation' => $last_activity->iplocation ?? '',
+        ];
         $roles = app(config('dashing.Models.Role'))->pluck('name', 'id')->sortBy('name');
 
         return view('dashing::admin.user.edit', compact('roles', 'model'));
@@ -187,8 +193,14 @@ class UserController extends Controller
             $trail->parent('home');
             $trail->push('Edit User Password');
         });
-
-        return view('dashing::admin.user.editPassword', compact('id'));
+        $model = app(config('dashing.Models.User'))->query()->findOrFail($id);
+        $last_activity = $model->audit()->first();
+        $model->last_activity = [
+            'datetime' => $last_activity->created_at ?? '',
+            'message' => $last_activity->message ?? '',
+            'iplocation' => $last_activity->iplocation ?? '',
+        ];
+        return view('dashing::admin.user.editPassword', compact('id', 'model'));
     }
 
     public function updatePassword(Request $request, $id)
