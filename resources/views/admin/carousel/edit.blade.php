@@ -5,7 +5,8 @@
     <x-slot name="breadcrumb">
         {{ \Breadcrumbs::render('breadcrumb') }}
     </x-slot>
-    <x-dashing::content-card class="col-max">
+    <x-dashing::content-card class="col-8">
+        <x-slot name="title">Details</x-slot>
         <div class="px-5">
             <x-dashing::form ajax="true" method="PATCH" action="{{ route('carousel.update',[$model->id]) }}">
                 <x-dashing::input-field type="text" name="slug" id="slug" label="Slug" :value="$model->slug ?? ''"/>
@@ -21,6 +22,7 @@
             </x-dashing::form>
         </div>
     </x-dashing::content-card>
+    <x-dashing::content-others-card :model="$model ?? ''" />
 @push('scripts')
 <script>
     $(document).ready(function() {

@@ -6,6 +6,7 @@
         {{ \Breadcrumbs::render('breadcrumb') }}
     </x-slot>
     <x-dashing::content-card class="col-max">
+        <x-slot name="title">Details</x-slot>
         <div class="px-5">
              <x-dashing::form ajax="true" method="POST" action="{{ route('carousel.store') }}">
                 <x-dashing::input-field type="text" name="slug" id="slug" label="Slug" :value="$model->slug ?? ''"/>

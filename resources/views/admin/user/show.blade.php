@@ -6,7 +6,7 @@
         {{ \Breadcrumbs::render('breadcrumb') }}
     </x-slot>
     <x-dashing::content-card class="col-8">
-        <x-slot name="title">Information</x-slot>
+        <x-slot name="title">Details</x-slot>
         <div class="px-5">
             <x-dashing::display-field type="text" name="id" id="id" label="ID" :value="$model->id ?? ''"/>
             <x-dashing::display-field type="text" name="brand" id="brand" label="Brand" :value="$model->brand->name ?? 'System'"/>

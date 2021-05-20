@@ -6,6 +6,7 @@
         {{ \Breadcrumbs::render('breadcrumb') }}
     </x-slot>
     <x-dashing::content-card class="col-8">
+        <x-slot name="title">Password</x-slot>
         <div class="px-5">
             <x-dashing::form ajax="true" method="PATCH" action="{{ route('user.updatePassword',[$id]) }}">
                 <x-dashing::input-field type="password" name="password" id="password" label="Password"  />

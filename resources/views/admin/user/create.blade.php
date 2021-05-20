@@ -6,6 +6,7 @@
         {{ \Breadcrumbs::render('breadcrumb') }}
     </x-slot>
     <x-dashing::content-card class="col-max">
+        <x-slot name="title">Details</x-slot>
         <div class="px-5">
             <x-dashing::form ajax="true" method="POST" action="{{ route('user.store') }}">
                 <x-dashing::select-field name="brand_id" id="brand_id" label="Brand" :options="['' => 'System'] + app(config('dashing.Models.Brand'))->query()->pluck('name','id')->toArray()" :selected="$model->brand_id ?? []"/>

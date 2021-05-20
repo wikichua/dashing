@@ -5,7 +5,8 @@
     <x-slot name="breadcrumb">
         {{ \Breadcrumbs::render('breadcrumb') }}
     </x-slot>
-    <x-dashing::content-card class="col-max">
+    <x-dashing::content-card class="col-8">
+        <x-slot name="title">Details</x-slot>
         <div class="px-5">
             <div class="row">
                 <div class="col">
@@ -21,6 +22,7 @@
             </div>
         </div>
     </x-dashing::content-card>
+    <x-dashing::content-others-card :model="$model ?? ''" />
 @push('scripts')
 <script>
    $(document).ready(function() {

@@ -5,7 +5,8 @@
     <x-slot name="breadcrumb">
         {{ \Breadcrumbs::render('breadcrumb') }}
     </x-slot>
-    <x-dashing::content-card class="col-max">
+    <x-dashing::content-card class="col-8">
+        <x-slot name="title">Details</x-slot>
         <div class="px-5">
             @php
             if (isset($model->brand->name)) {
@@ -23,12 +24,9 @@
             <x-dashing::display-field type="text" name="route_slug" id="route_slug" label="Route Slug" :value="$model->route_slug"/>
             <x-dashing::display-field type="text" name="route_params" id="route_params" label="Route Params" :value="$model->route_params" :type="is_array($model->route_params)? 'list':''"/>
             <x-dashing::display-field type="text" name="status" id="status" label="Status" :value="$model->status_name"/>
-            <x-dashing::display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>
-            <x-dashing::display-field type="text" name="created_by" id="created_by" label="Created By" :value="$model->creator->name ?? ''"/>
-            <x-dashing::display-field type="text" name="updated_at" id="updated_at" label="Updated At" :value="$model->updated_at"/>
-            <x-dashing::display-field type="text" name="updated_by" id="updated_by" label="Updated By" :value="$model->modifier->name ?? ''"/>
         </div>
     </x-dashing::content-card>
+    <x-dashing::content-others-card :model="$model ?? ''" />
 @push('scripts')
 <script>
     $(document).ready(function() {
