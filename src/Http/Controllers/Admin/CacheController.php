@@ -58,8 +58,12 @@ class CacheController extends Controller
             $trail->parent('home');
             $trail->push('Show Cache');
         });
-        $cache = json_decode(cache()->get('LogKeys')[$id]);
-
+        $model = json_decode(cache()->get('LogKeys')[$id]);
+        if (count($model->tags)) {
+            $model->value = cache()->tags($model->tags)->get($model->key);
+        } else {
+            $model->value = cache()->get($model->key);
+        }
         return view('dashing::admin.cache.show', compact('model'));
     }
 
