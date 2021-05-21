@@ -1,5 +1,5 @@
 <div class="text-right text-nowrap">
-    @if (strtolower($model->cache_status) == 'ready')
+    @if (strtolower($model->cache_status) == 'ready' || config('cache.default') == 'array')
     <a href="{{ route('report.show', $model->id) }}" class="btn btn-link text-secondary p-1" title="Read"><i class="fas fa-lg fa-eye"></i></a>
     @can('export-reports')
     <form method="POST" action="{{ route('report.export', $model->id) }}" class="d-inline-block">

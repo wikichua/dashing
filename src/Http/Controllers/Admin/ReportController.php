@@ -37,7 +37,11 @@ class ReportController extends Controller
             ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
-                $model->cache_status = false == Cache::has('report-'.str_slug($model->name)) ? 'Processing' : 'Ready';
+                if (config('cache.default') == 'array') {
+                    $model->cache_status = 'Ready';
+                } else {
+                    $model->cache_status = false == Cache::has('report-'.str_slug($model->name)) ? 'Processing' : 'Ready';
+                }
                 $model->actionsView = view('dashing::admin.report.actions', compact('model'))->render();
             }
             if ('' != $request->get('filters', '')) {
