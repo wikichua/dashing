@@ -87,12 +87,12 @@ class Help
     public function iplocation($ip = '')
     {
         if ('' == $ip) {
-            $ip = Cache::remember('sessions-ip:'.session()->getId(), (60 * 60 * 24 * 30), function () {
+            $ip = Cache::remember('sessions-ip-'.session()->getId(), (60 * 60 * 24 * 30), function () {
                 return $this->opendns();
             });
         }
 
-        return Cache::remember('iplocation:'.$ip, (60 * 60 * 24 * 30), function () use ($ip) {
+        return Cache::remember('iplocation-'.$ip, (60 * 60 * 24 * 30), function () use ($ip) {
             $fields = [
                 'status', 'message', 'continent', 'continentCode', 'country', 'countryCode', 'region', 'regionName', 'city', 'district', 'zip', 'lat', 'lon', 'timezone', 'offset', 'currency', 'isp', 'org', 'as', 'asname', 'reverse', 'mobile', 'proxy', 'hosting', 'query',
             ];
@@ -330,7 +330,7 @@ class Help
     {
         $brandName = '' != $brandName ? $brandName : $this->getBrandNameByHost(request()->getHost());
 
-        return Cache::tags('brand')->remember('brand-'.$brandName, (60 * 60 * 24), function () use ($brandName) {
+        return Cache::tags('brand')->remember('brand-'.str_slug($brandName), (60 * 60 * 24), function () use ($brandName) {
             return app(config('dashing.Models.Brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
         });
     }

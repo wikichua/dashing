@@ -19,6 +19,7 @@ class DashingServiceProvider extends ServiceProvider
         // $this->app->register(\Wikichua\Dashing\Providers\HelpServiceProvider::class);
         // $this->app->register(\Wikichua\Dashing\Providers\BrandServiceProvider::class);
         // $this->app->register(\Wikichua\Dashing\Providers\ValidatorServiceProvider::class);
+        // $this->app->register(\Wikichua\Dashing\Providers\EventServiceProvider::class);
 
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'wikichua');
         $this->loadMiddlewares();
@@ -84,7 +85,7 @@ class DashingServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->prefix(config('dashing.route.root', 'dashboard'))
             ->group(function () {
-                $files = cache()->rememberForever('setup:dashing-web-routes-files', function () {
+                $files = cache()->rememberForever('setup-dashing-web-routes-files', function () {
                     // load package routes
                     $files = File::files(__DIR__.'/../routes');
                     $out = [];
@@ -121,7 +122,7 @@ class DashingServiceProvider extends ServiceProvider
         Route::middleware('api')
             ->prefix('api')
             ->group(function () {
-                $files = cache()->rememberForever('setup:dashing-api-routes-files', function () {
+                $files = cache()->rememberForever('setup-dashing-api-routes-files', function () {
                     $files = File::files(__DIR__.'/../routes/api/');
                     $out = [];
                     foreach ($files as $file) {
@@ -175,12 +176,12 @@ class DashingServiceProvider extends ServiceProvider
     protected function configSettings()
     {
         if (Schema::hasTable('settings')) {
-            cache()->rememberForever('setup:config-settings', function () {
-                $settings = app(config('dashing.Models.Setting'))->all();
-                foreach ($settings as $setting) {
-                    Config::set('settings.'.$setting->key, $setting->value);
-                }
+            $settings = cache()->rememberForever('setup-config-settings', function () {
+                return app(config('dashing.Models.Setting'))->all();
             });
+            foreach ($settings as $setting) {
+                Config::set('settings.'.$setting->key, $setting->value);
+            }
         }
     }
 }

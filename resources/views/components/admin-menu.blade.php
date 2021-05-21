@@ -11,6 +11,7 @@
     'cronjob.*',
     'mailer.*',
     'versionizer.*',
+    'cache.*',
 ]"/>
 <x-dashing::menu menu="cms" :active-patterns="[
     'brand.*',

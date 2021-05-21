@@ -1,0 +1,82 @@
+<?php
+
+namespace Wikichua\Dashing\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Wikichua\Dashing\Repos\Collection;
+
+class CacheController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware(['auth_admin', 'can:access-admin-panel']);
+        $this->middleware('intend_url')->only(['index', 'read']);
+        $this->middleware('can:read-caches')->only(['index', 'read']);
+        $this->middleware('can:delete-caches')->only('destroy');
+        if (false == app()->runningInConsole()) {
+            \Breadcrumbs::for('home', function ($trail) {
+                $trail->push('Caches Listing', route('cache'));
+            });
+        }
+    }
+
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $items = array_map(function ($value) {
+                return json_decode($value);
+            }, cache()->get('LogKeys'));
+            $models = (new Collection(array_values($items)));
+            $paginated = $models->paginate($request->get('take', 25));
+            foreach ($paginated as $model) {
+                $model->id = md5($model->key);
+                $model->actionsView = view('dashing::admin.cache.actions', compact('model'))->render();
+                $model->tags = '<code>'.json_encode($model->tags, 1).'</code>';
+            }
+            if ('' != $request->get('filters', '')) {
+                $paginated->appends(['filters' => $request->get('filters', '')]);
+            }
+            $links = $paginated->onEachSide(5)->links()->render();
+            $currentUrl = $request->fullUrl();
+            return compact('paginated', 'links', 'currentUrl');
+        }
+        $getUrl = route('cache');
+        $html = [
+            ['title' => 'Key', 'data' => 'key', 'sortable' => true],
+            ['title' => 'Tags', 'data' => 'tags', 'sortable' => true],
+            ['title' => 'Seconds', 'data' => 'seconds', 'sortable' => true],
+            ['title' => '', 'data' => 'actionsView'],
+        ];
+
+        return view('dashing::admin.cache.index', compact('html', 'getUrl'));
+    }
+
+    public function show($id)
+    {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Cache');
+        });
+        $cache = json_decode(cache()->get('LogKeys')[$id]);
+
+        return view('dashing::admin.cache.show', compact('model'));
+    }
+
+    public function destroy($id)
+    {
+        $cache = json_decode(cache()->get('LogKeys')[$id]);
+        if (count($cache->tags)) {
+            cache()->tags($cache->tags)->forget($cache->key);
+        } else {
+            cache()->forget($cache->key);
+        }
+        return response()->json([
+            'status' => 'success',
+            'flash' => 'Cache Deleted.',
+            'reload' => false,
+            'relist' => true,
+            'redirect' => false,
+        ]);
+    }
+}

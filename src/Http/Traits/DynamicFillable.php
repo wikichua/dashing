@@ -17,7 +17,7 @@ trait DynamicFillable
             return $this->fillable;
         }
 
-        return Cache::tags('fillable')->remember('fillable:'.$this->getTable(), (60 * 60 * 24), function () {
+        return Cache::tags('fillable')->remember('fillable-'.str_slug($this->getTable()), (60 * 60 * 24), function () {
             return Schema::connection($this->connection)->getColumnListing($this->getTable());
         });
     }

@@ -94,7 +94,7 @@ class BrandController extends Controller
 
         $model->update($request->input());
 
-        \Cache::forget('brand-'.$model->name);
+        \Cache::forget('brand-'.str_slug($model->name));
         sendAlert([
             'brand_id' => 0,
             'link' => $model->readUrl,

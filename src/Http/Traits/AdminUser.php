@@ -33,7 +33,7 @@ trait AdminUser
             $user_id = auth()->id();
         }
 
-        return Cache::tags('permissions')->remember('permissions:'.$user_id, (60 * 60 * 24), function () {
+        return Cache::tags('permissions')->remember('permissions-'.$user_id, (60 * 60 * 24), function () {
             return $this->permissions->merge($this->roles->flatMap(function ($role) {
                 return $role->permissions;
             }));

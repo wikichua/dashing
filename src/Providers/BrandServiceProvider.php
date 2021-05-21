@@ -27,7 +27,7 @@ class BrandServiceProvider extends ServiceProvider
                     }
                     // load admin routes in brand
                     if (File::exists($dir.'/routes/sap')) {
-                        $files = cache()->rememberForever('setup:dashing-brands-routes-files', function () use ($dir) {
+                        $files = cache()->rememberForever('setup-dashing-brands-routes-files', function () use ($dir) {
                             $files = File::files($dir.'/routes/sap/');
                             $out = [];
                             foreach ($files as $file) {

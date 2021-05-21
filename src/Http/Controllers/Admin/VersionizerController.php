@@ -11,9 +11,9 @@ class VersionizerController extends Controller
     {
         $this->middleware(['auth_admin', 'can:access-admin-panel']);
         $this->middleware('intend_url')->only(['index', 'read']);
-        $this->middleware('can:Read Versionizers')->only(['index', 'read']);
-        $this->middleware('can:Revert Versionizers')->only(['revert']);
-        $this->middleware('can:Delete Versionizers')->only('destroy');
+        $this->middleware('can:read-versionizers')->only(['index', 'read']);
+        $this->middleware('can:revert-versionizers')->only(['revert']);
+        $this->middleware('can:delete-versionizers')->only('destroy');
         if (false == app()->runningInConsole()) {
             \Breadcrumbs::for('home', function ($trail) {
                 $trail->push('Versionizers Listing', route('versionizer'));
