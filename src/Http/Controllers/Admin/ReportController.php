@@ -116,13 +116,13 @@ class ReportController extends Controller
         $models = [];
         $model = app(config('dashing.Models.Report'))->query()->findOrFail($id);
         $models = Cache::get('report-'.str_slug($model->name), function () use ($model, $models) {
+            $results = [];
             foreach ($model->queries as $sql) {
-                $models[] = array_map(function ($value) {
+                $results[] = array_map(function ($value) {
                     return (array) $value;
                 }, \DB::select($sql));
             }
-
-            return $models;
+            return $results;
         });
         $report = $model;
         return view('dashing::admin.report.show', compact('model', 'models', 'report'));

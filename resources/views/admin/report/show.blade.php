@@ -18,7 +18,11 @@
             <div class="tab-content">
                 @foreach ($models as $index => $model)
                 <div class="tab-pane fade {{ $loop->iteration == 1? 'show active':'' }}" id="nav-sql-{{ $loop->iteration }}" role="tabpanel" aria-labelledby="nav-sql-{{ $loop->iteration }}-tab">
-                    <div class="text-secondary my-3">{{ $report->queries[$index] }}</div>
+                    <div class="text-secondary p-2 text-center">
+                        <i class="fas fa-quote-left"></i>
+                        <span class="mx-3">{{ $report->queries[$index] }}</span>
+                        <i class="fas fa-quote-right"></i>
+                    </div>
                     <x-dashing::report-table :data="$model"/>
                 </div>
                 @endforeach
