@@ -109,7 +109,7 @@ class ReportController extends Controller
 
     public function show($id)
     {
-        \Breadcrumbs::for('home', function ($trail) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Show Report');
         });
