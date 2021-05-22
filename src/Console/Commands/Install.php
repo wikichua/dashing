@@ -35,15 +35,19 @@ class Install extends Command
             $vendorPath.'/resources/css' => resource_path('css'),
             $vendorPath.'/resources/scss' => resource_path('scss'),
             $vendorPath.'/resources/js' => resource_path('js'),
-            $vendorPath.'/resources/views/components/custom-admin-menu.blade.php' => resource_path('views/vendor/dashing/components/custom-admin-menu.blade.php'),
         ];
         $this->copiesFileOrDirectory($files);
+        $this->copiesFileOrDirectory([
+            $vendorPath.'/resources/views/components/custom-admin-menu.blade.php' => resource_path('views/vendor/dashing/components/custom-admin-menu.blade.php'),
+        ], false);
         $this->checkCacheDriver();
         $this->replaceRouteServiceProviderHomeConst();
         $this->replaceUserModelExtends();
         $this->injectRunCronjobsCallIntoConsoleKernel();
         $this->injectUseArtisanTraitIntoConsoleKernel();
         $this->injectDisableCommandsCallConsoleKernel();
+        $this->injectLogCacheKeyInEventListener();
+        $this->removeDefaultWebRoute();
         if ($this->option('no-compiled') != true) {
             $this->dumpComposer();
             if ($this->confirm('npm install?', true)) {
@@ -55,7 +59,6 @@ class Install extends Command
                 $this->info($output);
             }
         }
-        $this->removeDefaultWebRoute();
         cache()->flush();
         return ;
     }
@@ -103,9 +106,12 @@ class Install extends Command
         }
     }
 
-    protected function copiesFileOrDirectory(array $data)
+    protected function copiesFileOrDirectory(array $data, $replace = true)
     {
         foreach ($data as $from => $to) {
+            if ($replace == false && file_exists($to)) {
+                return;
+            }
             is_dir($from)? @File::copyDirectory($from, $to):@File::copy($from, $to);
             $this->info('Copy '.$from.' to '. $to);
             $this->newLine();
@@ -201,6 +207,30 @@ class Install extends Command
                 if (str_contains($line, '$this->load(__DIR__.\'/Commands\');')) {
                     $from = $line;
                     $to = $lines[$key] = str_repeat("\t", 2).'$this->disableCommands();'.PHP_EOL.$line;
+                }
+            }
+            if (isset($from)) {
+                @File::replace($file, implode(PHP_EOL, $lines));
+                $this->info('Replace '.trim($from).' to '. trim($to) . ' in ' . $file);
+                $this->newLine();
+            }
+        }
+    }
+    protected function injectLogCacheKeyInEventListener()
+    {
+        $file = app_path('Providers/EventServiceProvider.php');
+        $content = @File::get($file);
+        if (!str_contains($content, 'Wikichua\Dashing\Listeners\LogKeyWritten')) {
+            $lines = explode(PHP_EOL, $content);
+            foreach ($lines as $key => $line) {
+                if (str_contains($line, 'protected $listen = [')) {
+                    $from = $line;
+                    $to = $lines[$key] = $line.PHP_EOL.str_repeat("\t", 2).'\'Illuminate\Cache\Events\KeyWritten\' => [
+            \'Wikichua\Dashing\Listeners\LogKeyWritten\',
+        ],
+        \'Illuminate\Cache\Events\KeyForgotten\' => [
+            \'Wikichua\\Dashing\\Listeners\\LogKeyForgotten\',
+        ],';
                 }
             }
             if (isset($from)) {

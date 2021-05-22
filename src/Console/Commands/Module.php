@@ -400,11 +400,11 @@ class Module extends Command
     protected function route()
     {
         if ($this->brand) {
-            $this->file->ensureDirectoryExists(base_path('brand/'.$this->brand.'/routes/dashing'));
-            $route_file = base_path('brand/'.$this->brand.'/routes/dashing/'.$this->replaces['{%model_variable%}'].'Routes.php');
+            $this->file->ensureDirectoryExists(base_path('brand/'.$this->brand.'/routes/admin'));
+            $route_file = base_path('brand/'.$this->brand.'/routes/admin/'.$this->replaces['{%model_variable%}'].'Routes.php');
         } else {
-            $this->file->ensureDirectoryExists(base_path('routes/dashing'));
-            $route_file = base_path('routes/dashing').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
+            $this->file->ensureDirectoryExists(base_path('routes/admin'));
+            $route_file = base_path('routes/admin').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
         }
         $route_stub = $this->stub_path.'/route.stub';
         if (!$this->file->exists($route_stub)) {
@@ -423,11 +423,11 @@ class Module extends Command
     protected function api_route()
     {
         if ($this->brand) {
-            $this->file->ensureDirectoryExists(base_path('brand/'.$this->brand.'/routes/dashing/api'));
-            $route_file = base_path('brand/'.$this->brand.'/routes/dashing/api/'.$this->replaces['{%model_variable%}'].'Routes.php');
+            $this->file->ensureDirectoryExists(base_path('brand/'.$this->brand.'/routes/admin/api'));
+            $route_file = base_path('brand/'.$this->brand.'/routes/admin/api/'.$this->replaces['{%model_variable%}'].'Routes.php');
         } else {
-            $this->file->ensureDirectoryExists(base_path('routes/dashing/api'));
-            $route_file = base_path('routes/dashing/api').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
+            $this->file->ensureDirectoryExists(base_path('routes/admin/api'));
+            $route_file = base_path('routes/admin/api').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
         }
         $route_stub = $this->stub_path.'/api_route.stub';
         if (!$this->file->exists($route_stub)) {

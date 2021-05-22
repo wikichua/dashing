@@ -93,8 +93,8 @@ class DashingServiceProvider extends ServiceProvider
                         $out[] = $file->getPathname();
                     }
                     // load app routes
-                    if (File::exists(app_path('../routes/dashing'))) {
-                        $files = File::files(app_path('../routes/dashing/'));
+                    if (File::exists(app_path('../routes/admin'))) {
+                        $files = File::files(app_path('../routes/admin/'));
                         foreach ($files as $file) {
                             $out[] = $file->getPathname();
                         }
@@ -128,8 +128,8 @@ class DashingServiceProvider extends ServiceProvider
                     foreach ($files as $file) {
                         $out[] = $file->getPathname();
                     }
-                    if (File::exists(app_path('../routes/dashing'))) {
-                        $files = File::files(app_path('../routes/dashing/'));
+                    if (File::exists(app_path('../routes/admin/api'))) {
+                        $files = File::files(app_path('../routes/admin/api/'));
                         foreach ($files as $file) {
                             $out[] = $file->getPathname();
                         }

@@ -60,7 +60,6 @@
         "laravel": {
             "providers": [
                 "Wikichua\\Dashing\\DashingServiceProvider",
-                "Wikichua\\Dashing\\Providers\\EventServiceProvider",
                 "Wikichua\\Dashing\\Providers\\HelpServiceProvider",
                 "Wikichua\\Dashing\\Providers\\BrandServiceProvider",
                 "Wikichua\\Dashing\\Providers\\CollectionPaginationServiceProvider",

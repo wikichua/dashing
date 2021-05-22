@@ -26,15 +26,15 @@ class BrandServiceProvider extends ServiceProvider
                         $this->loadMigrationsFrom($dir.'/database/migrations');
                     }
                     // load admin routes in brand
-                    if (File::exists($dir.'/routes/sap')) {
+                    if (File::exists($dir.'/routes/admin')) {
                         $files = cache()->rememberForever('setup-dashing-brands-routes-files', function () use ($dir) {
-                            $files = File::files($dir.'/routes/sap/');
+                            $files = File::files($dir.'/routes/admin/');
                             $out = [];
                             foreach ($files as $file) {
                                 $out[] = $file->getPathname();
                             }
-                            if (File::exists($dir.'/routes/sap/api')) {
-                                $files = File::files($dir.'/routes/sap/api/');
+                            if (File::exists($dir.'/routes/admin/api')) {
+                                $files = File::files($dir.'/routes/admin/api/');
                                 foreach ($files as $file) {
                                     $out[] = $file->getPathname();
                                 }
