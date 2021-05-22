@@ -87,18 +87,18 @@ class Help
     public function iplocation($ip = '')
     {
         if ('' == $ip) {
-            $ip = Cache::remember('sessions-ip-'.session()->getId(), (60 * 60 * 24 * 30), function () {
+            /*$ip = Cache::remember('sessions-ip-'.session()->getId(), (60 * 60 * 24 * 30), function () {
                 return $this->opendns();
-            });
+            });*/
+            $ip = $this->opendns();
         }
-
-        return Cache::remember('iplocation-'.$ip, (60 * 60 * 24 * 30), function () use ($ip) {
-            $fields = [
-                'status', 'message', 'continent', 'continentCode', 'country', 'countryCode', 'region', 'regionName', 'city', 'district', 'zip', 'lat', 'lon', 'timezone', 'offset', 'currency', 'isp', 'org', 'as', 'asname', 'reverse', 'mobile', 'proxy', 'hosting', 'query',
-            ];
-
-            return json_decode(\Http::get('//ip-api.com/json/'.$ip, ['fields' => implode(',', $fields)]), 1);
-        }) + ['locale' => request()->route('locale')];
+        $fields = [
+            'status', 'message', 'continent', 'continentCode', 'country', 'countryCode', 'region', 'regionName', 'city', 'district', 'zip', 'lat', 'lon', 'timezone', 'offset', 'currency', 'isp', 'org', 'as', 'asname', 'reverse', 'mobile', 'proxy', 'hosting', 'query',
+        ];
+        $results = Cache::remember('iplocation-'.$ip, (60 * 60 * 24 * 30), function () use ($fields) {
+            return json_decode(\Http::get('//ip-api.com/json/', ['fields' => implode(',', $fields)]), 1);
+        });
+        return array_merge($results, ['locale' => request()->route('locale')]);
     }
 
     public function agent()
@@ -137,8 +137,10 @@ class Help
                 unset($data[$unset_key]);
             }
         }
+
+        $iplocation = $this->iplocation();
         if ('' == $ip) {
-            $ip = $this->opendns();
+            $ip = $iplocation['query'];
         }
 
         app(config('dashing.Models.Audit'))->create([
@@ -150,7 +152,7 @@ class Help
             'brand_id' => auth()->check() ? auth()->user()->brand_id : null,
             'opendns' => $ip,
             'agents' => $this->agents(),
-            'iplocation' => $this->iplocation($ip),
+            'iplocation' => $iplocation,
         ]);
     }
 
