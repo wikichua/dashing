@@ -1,4 +1,4 @@
-@props(['id','label','type','name','selected','options' => []])
+@props(['id','label','type','name','selected','options' => [],'datalist' => 'false'])
 @php
 	if (isset($selected) && !is_array($selected)) {
 		$selected = [$selected];
@@ -25,7 +25,7 @@
 <script>
     let TomSelect_{{ $id }} = new TomSelect('#{{ $id }}',{
         allowEmptyOption: true,
-        create: true
+        create: {{ $datalist }}
     });
 </script>
 @endpush

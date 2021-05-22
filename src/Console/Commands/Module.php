@@ -177,12 +177,12 @@ class Module extends Command
             if (count($options['attributes'])) {
                 $temp_attrs = [];
                 foreach ($options['attributes'] as $attr_key => $attr_val) {
-                    $temp_attrs[] = "'{$attr_key}'=\"{$attr_val}\"";
+                    $temp_attrs[] = "{$attr_key}=\"{$attr_val}\"";
                     if ('multiple' == $attr_key) {
                         $isMultiple = true;
                     }
                 }
-                $replace_for_form['{%attributes_tag%}'] = implode(' ', $temp_attrs);
+                $replace_for_form['{%attributes_tag%}'] = trim(implode(' ', $temp_attrs));
             }
             $replace_for_form['{%class_tag%}'] = $options['class'];
 
@@ -236,15 +236,10 @@ class Module extends Command
                     break;
 
                 case 'select':
-                    $form_stub = '<x-dashing::select-field name="{%field%}" id="{%field%}" label="{%label%}" class="{%class_tag%}" {%attributes_tag%} :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
+                case 'datalist':
+                    $form_stub = '<x-dashing::select-field name="{%field%}" id="{%field%}" label="{%label%}" class="{%class_tag%}" {%attributes_tag%} :options="'.$select_options.'" :selected="$model->{%field%} ?? []" '.($options['type'] == 'datalist' ? 'datalist':'').'/>';
                     $type = $isMultiple ? 'list' : 'text';
                     $read_stub = '<x-dashing::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="'.$type.'"/>';
-
-                    break;
-
-                case 'datalist':
-                    $form_stub = '<x-dashing::datalist-field name="{%field%}" id="{%field%}" label="{%label%}" class="{%class_tag%}" {%attributes_tag%} :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
-                    $read_stub = '<x-dashing::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
 
                     break;
 
@@ -277,8 +272,8 @@ class Module extends Command
 
                     break;
             }
-            $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $form_stub);
-            $read_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $read_stub);
+            $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, str_replace('  ', ' ', $form_stub));
+            $read_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, str_replace('  ', ' ', $read_stub));
 
             if (in_array($options['type'], ['file', 'image'])) {
                 if (isset($options['attributes']['multiple']) && 'multiple' == $options['attributes']['multiple']) {
