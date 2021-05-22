@@ -28,9 +28,27 @@ class CacheController extends Controller
                 return json_decode($value);
             }, cache()->get('LogKeys'));
             $models = (new Collection(array_values($items)));
+            if ('' != $request->get('filters', '')) {
+                parse_str(json_decode($request->get('filters', ''), 1)['filter'], $filters);
+                if (isset($filters['key']) && $filters['key'] != '') {
+                    $models = $models->filter(function ($value) use ($filters) {
+                        if (\Str::contains($value->key, $filters['key'])) {
+                            return $value;
+                        }
+                    });
+                }
+                if (isset($filters['tags']) && is_array($filters['tags']) && count($filters['tags'])) {
+                    $models = $models->filter(function ($value) use ($filters) {
+                        if (count(array_intersect($value->tags, $filters['tags']))) {
+                            return $value;
+                        }
+                    });
+                }
+            }
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->id = md5($model->key);
+                $model->value = 'censored';
                 $model->actionsView = view('dashing::admin.cache.actions', compact('model'))->render();
                 $model->tags = '<code>'.json_encode($model->tags, 1).'</code>';
             }
