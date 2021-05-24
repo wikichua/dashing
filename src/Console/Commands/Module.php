@@ -311,14 +311,11 @@ class Module extends Command
                 $scopes[] = 'public function scopeFilter'.studly_case($field).'($query, $search)';
                 $scopes[] = $this->indent().'{';
 
-                $searches[] = '<div class="form-group">';
-                $searches[] = $this->indent().'<label for="'.$field.'">'.$options['label'].'</label>';
-
                 switch ($options['type']) {
                     case 'date':
                         $scopes[] = $this->indent().'$date = $this->getDateFilter($search);';
                         $scopes[] = $this->indent().'return $query->whereBetween(\''.$field.'\', [ $this->inUserTimezone($date[\'start_at\']), $this->inUserTimezone($date[\'stop_at\'])]);';
-                        $searches[] = $this->indent().'<x-dashing::search-date-field type="text" name="'.$field.'" id="'.$field.'"/>';
+                        $searches[] = $this->indent().'<x-dashing::search-date-field name="'.$field.'" id="'.$field.'" label="'.$options['label'].'"/>';
 
                         break;
 
@@ -327,22 +324,20 @@ class Module extends Command
                     case 'radio':
                     case 'checkbox':
                         $scopes[] = $this->indent().'    return $query->whereIn(\''.$field.'\', $search);';
-                        $searches[] = $this->indent().'<x-dashing::search-select-field name="'.$field.'" id="'.$field.'" :options="'.$select_options.'"/>';
+                        $searches[] = $this->indent().'<x-dashing::search-select-field name="'.$field.'" id="'.$field.'" :options="'.$select_options.'" label="'.$options['label'].'"/>';
 
                         break;
 
                     case 'text':
                     case 'textarea':
                         $scopes[] = $this->indent().'return $query->where(\''.$field.'\', \'like\', "%{$search}%");';
-                        $searches[] = $this->indent().'<x-dashing::search-input-field type="text" name="'.$field.'" id="'.$field.'"/>';
+                        $searches[] = $this->indent().'<x-dashing::search-input-field type="text" name="'.$field.'" id="'.$field.'" label="'.$options['label'].'"/>';
                         $searchable_fields[] = "'".$field."'";
 
                         break;
                 }
 
-                $searches[] = $this->indent().'</div>';
                 $search_fields[] = implode(PHP_EOL, $searches).PHP_EOL;
-
                 $scopes[] = $this->indent().'}';
                 $search_scopes[] = implode(PHP_EOL, $scopes).PHP_EOL;
             }
