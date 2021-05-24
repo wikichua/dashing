@@ -38,6 +38,6 @@ class Mailer extends \Spatie\MailTemplates\Models\MailTemplate
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = route('mailer.show', $this->id);
+        return $this->readUrl = sset($this->id) ? route('mailer.show', $this->id):'';
     }
 }

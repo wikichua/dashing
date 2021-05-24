@@ -67,7 +67,7 @@ class Nav extends Model
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = route('nav.show', $this->id);
+        return $this->readUrl = sset($this->id) ? route('nav.show', $this->id):'';
     }
 
     public function brand()

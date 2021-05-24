@@ -43,12 +43,12 @@ class Component extends Model
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = route('brand.show', $this->id);
+        return $this->readUrl = isset($this->id) ? route('brand.show', $this->id):'';
     }
 
     public function getBrandNameAttribute($value)
     {
-        return $this->brand_name = $this->brand ? strtolower($this->brand->name) : 'sap';
+        return $this->brand_name = $this->brand ? strtolower($this->brand->name) : 'System';
     }
 
     public function brand()

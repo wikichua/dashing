@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['web', 'auth_admin', 'can:access-admin-panel']], function () {
+Route::group(['middleware' => ['web', 'auth_admin', 'can:access-admin-panel','auth:sanctum']], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::match(['get'], '', [config('dashing.Controllers.User'),'index'])->name('user');
         Route::match(['get'], '{user}/read', [config('dashing.Controllers.User'),'show'])->name('user.show');

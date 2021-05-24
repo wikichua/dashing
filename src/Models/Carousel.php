@@ -92,6 +92,6 @@ class Carousel extends Eloquent
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = route('carousel.show', $this->id);
+        return $this->readUrl = isset($this->id)? route('carousel.show', $this->id):'';
     }
 }
