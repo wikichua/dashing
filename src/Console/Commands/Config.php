@@ -26,16 +26,14 @@ class Config extends Command
 
                 return '';
             }
-            $config_path = base_path('brand/'.$this->brand.'/config/dashing');
+            $config_path = base_path('brand/'.$this->brand.'/resources/config/dashing');
             $model = $this->brand.(str_replace($this->brand, '', $this->argument('model')));
         } else {
-            $config_path = 'config/dashing';
+            $config_path = resource_path('config/dashing');
             $model = $this->argument('model');
         }
 
-        if (!$files->exists($config_path)) {
-            $files->makeDirectory($config_path, 0755, true);
-        }
+        $files->ensureDirectoryExists($config_path);
         $config_stub = config('dashing.stubs.path').'/config.stub';
         if (!$files->exists($config_stub)) {
             $config_stub = __DIR__.'/../../resources/stubs/config.stub';

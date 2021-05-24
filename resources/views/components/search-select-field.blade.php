@@ -4,7 +4,7 @@
         $name = $name.'[]';
     }
 @endphp
-<div class="mt-2">
+<div class="my-2">
 <label class="form-label" for="{{ $id }}">{{ $label ?? '' }}</label>
 <select name="{{ $name }}" id="{{ $id }}" {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => ' form-control filterInput col-max']) !!}>
     <option value="">Please Select</option>

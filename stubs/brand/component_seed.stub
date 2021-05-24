@@ -8,6 +8,7 @@ class Dashing{%comp_name%}ComponentSeed extends Migration
 {
     public function up()
     {
+        cache()->tags(['fillable','setup'])->flush();
         app(config('dashing.Models.Component'))->query()->create([
             'name' => '{%comp_name%}',
             'status' => 'P',

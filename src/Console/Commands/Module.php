@@ -28,10 +28,10 @@ class Module extends Command
                 return '';
             }
             $this->model = $this->brand.(str_replace($this->brand, '', $this->argument('model')));
-            $config_file = base_path('brand/'.$this->brand.'/config/dashing/'.$this->model.'Config.php');
+            $config_file = base_path('brand/'.$this->brand.'/resources/config/dashing/'.$this->model.'Config.php');
         } else {
             $this->model = $this->argument('model');
-            $config_file = config_path('dashing/'.$this->model.'Config.php');
+            $config_file = resource_path('config/dashing/'.$this->model.'Config.php');
         }
 
         if (!$this->file->exists($config_file)) {
@@ -103,7 +103,7 @@ class Module extends Command
     protected function reinstate()
     {
         $this->orderable();
-
+        $searchable_types = ['date', 'select', 'datalist', 'radio', 'checkbox', 'text', 'textarea', ];
         $config_form = $this->config['form'];
         $upload_strings = $model_keys = $setting_keys = $table_fields = $search_scopes = $search_fields = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $searchable_fields = $relationships_query = [];
 
@@ -307,7 +307,7 @@ class Module extends Command
 
             $scopes = [];
             $searches = [];
-            if ($options['search']) {
+            if ($options['search'] && in_array($options['type'], $searchable_types)) {
                 $scopes[] = 'public function scopeFilter'.studly_case($field).'($query, $search)';
                 $scopes[] = $this->indent().'{';
 

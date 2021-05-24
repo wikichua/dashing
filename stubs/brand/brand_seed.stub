@@ -8,6 +8,7 @@ class Dashing{%brand_name%}BrandSeed extends Migration
 {
     public function up()
     {
+        cache()->tags(['fillable','setup'])->flush();
         Schema::create('{%brand_string%}_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');

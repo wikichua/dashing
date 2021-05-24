@@ -8,7 +8,7 @@ class Dashing{%model%}Table extends Migration
 {
     public function up()
     {
-        cache()->tags(['fillable'])->flush();
+        cache()->tags(['fillable','setup'])->flush();
         Schema::create('{%table_name%}', function (Blueprint $table) {
             $table->increments('id');
             {%migration_codes%}

@@ -85,7 +85,7 @@ class DashingServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->prefix(config('dashing.route.root', 'dashboard'))
             ->group(function () {
-                $files = cache()->rememberForever('setup-dashing-web-routes-files', function () {
+                $files = cache()->tags(['setup'])->rememberForever('setup-dashing-web-routes-files', function () {
                     // load package routes
                     $files = File::files(__DIR__.'/../routes');
                     $out = [];
@@ -122,7 +122,7 @@ class DashingServiceProvider extends ServiceProvider
         Route::middleware('api')
             ->prefix('api')
             ->group(function () {
-                $files = cache()->rememberForever('setup-dashing-api-routes-files', function () {
+                $files = cache()->tags(['setup'])->rememberForever('setup-dashing-api-routes-files', function () {
                     $files = File::files(__DIR__.'/../routes/api/');
                     $out = [];
                     foreach ($files as $file) {
@@ -176,7 +176,7 @@ class DashingServiceProvider extends ServiceProvider
     protected function configSettings()
     {
         if (Schema::hasTable('settings')) {
-            $settings = cache()->rememberForever('setup-config-settings', function () {
+            $settings = cache()->tags(['setup'])->rememberForever('setup-config-settings', function () {
                 return app(config('dashing.Models.Setting'))->all();
             });
             foreach ($settings as $setting) {
