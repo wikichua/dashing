@@ -57,6 +57,7 @@ class SeedData extends Migration
         app(config('dashing.Models.Setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'user_status', 'value' => ['A' => 'Active', 'I' => 'Inactive']]);
         app(config('dashing.Models.Setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'locales', 'value' => ['en' => 'EN']]);
         app(config('dashing.Models.Setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'report_status', 'value' => ['A' => 'Active', 'I' => 'Inactive']]);
+        app(config('dashing.Models.Setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'cronjob_status', 'value' => ['A' => 'Active', 'I' => 'Inactive']]);
         app(config('dashing.Models.Permission'))->createGroup('Reports', ['create-reports', 'read-reports', 'update-reports', 'delete-reports', 'export-reports'], $user_id);
         app(config('dashing.Models.Setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'brand_status', 'value' => ['A' => 'Published', 'P' => 'Pending', 'E' => 'Expired']]);
         app(config('dashing.Models.Permission'))->createGroup('Brands', ['read-brands', 'update-brands'], $user_id);
@@ -97,6 +98,7 @@ class SeedData extends Migration
             'page_status',
             'brand_status',
             'report_status',
+            'cronjob_status',
             'permission_groups',
             'user_types',
             'user_status',
