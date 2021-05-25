@@ -146,8 +146,10 @@ class Mailer extends Command
     {
         $name = $this->name;
         $namespace = 'App\Mail';
+        $brand = 0;
         if ($isBrand) {
             $namespace = "Brand\\{$this->brandName}\\Mail";
+            $brand = 'app(config(\'dashing.Models.Brand\'))->where(\'name\',\''.$this->brandName.'\')->first()->id';
         }
 
         return <<<EOT
@@ -166,6 +168,7 @@ class Mailer extends Command
                         'subject' => 'Welcome, {{ name }}',
                         'html_template' => '<h1>Hello, {{ name }}!</h1>',
                         'text_template' => 'Hello, {{ name }}!',
+                        'brand_id' => {$brand},
                     ]);
                 }
                 public function down()

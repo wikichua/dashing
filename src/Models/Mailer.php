@@ -20,6 +20,7 @@ class Mailer extends \Spatie\MailTemplates\Models\MailTemplate
         'text_template',
         'created_by',
         'updated_by',
+        'brand_id',
     ];
 
     protected $appends = [
@@ -38,6 +39,16 @@ class Mailer extends \Spatie\MailTemplates\Models\MailTemplate
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = sset($this->id) ? route('mailer.show', $this->id):'';
+        return $this->readUrl = isset($this->id) ? route('mailer.show', $this->id):'';
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(config('dashing.Models.Brand'))->withDefault(['name' => null]);
+    }
+
+    public function setBrandIdAttribute($value)
+    {
+        return $this->brand_id = $value == '' ? 0: $value;
     }
 }

@@ -19,6 +19,7 @@ class CreateCronjobsTable extends Migration
             $table->string('status', 1)->nullable()->default('I');
             $table->integer('created_by')->nullable()->default(1);
             $table->integer('updated_by')->nullable()->default(1);
+            $table->integer('brand_id')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -14,6 +14,7 @@ class CreateReportTable extends Migration
             $table->string('name')->nullable()->default('')->unique();
             $table->json('queries')->nullable();
             $table->string('status', 1)->nullable()->default('');
+            $table->integer('brand_id')->nullable()->default(0);
             $table->integer('created_by')->nullable()->default(0);
             $table->integer('updated_by')->nullable()->default(0);
             $table->integer('cache_ttl')->nullable()->default(300); // 5 mins

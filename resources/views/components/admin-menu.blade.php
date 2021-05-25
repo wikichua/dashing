@@ -1,17 +1,19 @@
-<x-dashing::menu menu="admin" :active-patterns="[
-    'user.*',
-    'pat.*',
+<x-dashing::menu menu="system" :active-patterns="[
     'permission.*',
     'role.*',
     'setting.*',
-    'report.*',
     'audit.*',
     'logviewer.*',
     'failedjob.*',
-    'cronjob.*',
-    'mailer.*',
     'versionizer.*',
     'cache.*',
+]"/>
+<x-dashing::menu menu="admin" :active-patterns="[
+    'user.*',
+    'pat.*',
+    'report.*',
+    'cronjob.*',
+    'mailer.*',
 ]"/>
 <x-dashing::menu menu="cms" :active-patterns="[
     'brand.*',

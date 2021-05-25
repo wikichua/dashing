@@ -432,4 +432,12 @@ class Help
             return $ids = array_unique($ids);
         });
     }
+
+    public function selectBrandIDs()
+    {
+        if (isset(auth()->user()->brand_id) && auth()->user()->brand_id) {
+            return [auth()->user()->brand_id => auth()->user()->brand->name];
+        }
+        return ['' => 'System'] + app(config('dashing.Models.Brand'))->query()->pluck('name', 'id')->toArray();
+    }
 }

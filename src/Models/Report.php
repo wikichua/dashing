@@ -23,6 +23,7 @@ class Report extends Model
         'cache_ttl',
         'generated_at',
         'next_generate_at',
+        'brand_id',
     ];
 
     protected $appends = [
@@ -58,5 +59,15 @@ class Report extends Model
     public function getNextGenerateAtAttribute($value)
     {
         return $this->inUserTimezone($value);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(config('dashing.Models.Brand'))->withDefault(['name' => null]);
+    }
+
+    public function setBrandIdAttribute($value)
+    {
+        return $this->brand_id = $value == '' ? 0: $value;
     }
 }

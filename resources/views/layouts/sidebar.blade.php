@@ -7,7 +7,7 @@
 
         <ul class="sidebar-nav bg-light">
             <x-dashing::nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                <i class="align-middle text-dark" data-feather="sliders"></i><span class="align-middle">{{ __('Dashboard') }}</span>
+                <i class="align-middle text-dark" data-feather="tv"></i><span class="align-middle">{{ __('Dashboard') }}</span>
             </x-dashing::nav-link>
 
             <x-dashing::admin-menu />

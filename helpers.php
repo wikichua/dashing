@@ -169,3 +169,9 @@ if (!function_exists('permissionUserIds')) {
         return Help::permissionUserIds($permission, $brand_id);
     }
 }
+if (!function_exists('selectBrandIDs')) {
+    function selectBrandIDs()
+    {
+        return Help::selectBrandIDs();
+    }
+}

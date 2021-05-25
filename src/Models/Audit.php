@@ -53,6 +53,11 @@ class Audit extends Model
         return $this->model_class ? app($this->model_class)->find($this->model_id) : null;
     }
 
+    public function setBrandIdAttribute($value)
+    {
+        return $this->brand_id = $value == '' ? 0: $value;
+    }
+
     public function getDataAttribute($data)
     {
         $data = json_decode($data, 1);

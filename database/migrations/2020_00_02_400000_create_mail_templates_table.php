@@ -17,6 +17,7 @@ class CreateMailTemplatesTable extends Migration
             $table->longtext('text_template')->nullable();
             $table->integer('created_by')->nullable()->default(1);
             $table->integer('updated_by')->nullable()->default(1);
+            $table->integer('brand_id')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

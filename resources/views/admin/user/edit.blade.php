@@ -9,7 +9,7 @@
         <x-slot name="title">Details</x-slot>
         <div class="px-5">
             <x-dashing::form ajax="true" method="PATCH" action="{{ route('user.update',[$model->id]) }}">
-                <x-dashing::select-field name="brand_id" id="brand_id" label="Brand" :options="['' => 'System'] + app(config('dashing.Models.Brand'))->query()->pluck('name','id')->toArray()" :selected="$model->brand_id ?? []"/>
+                <x-dashing::select-field name="brand_id" id="brand_id" label="Brand" :options="selectBrandIDs()" :selected="$model->brand_id ?? []"/>
                 <x-dashing::input-field type="text" name="name" id="name" label="Full Name" :value="$model->name ?? ''"/>
                 <x-dashing::input-field type="email" name="email" id="email" label="Email" :value="$model->email ?? ''"/>
                 <x-dashing::select-field name="timezone" id="timezone" label="Timezone" :options="timezones()" :selected="$model->timezone ?? []"/>

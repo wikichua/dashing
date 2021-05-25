@@ -23,6 +23,7 @@ class Cronjob extends Eloquent
         'status',
         'created_by',
         'updated_by',
+        'brand_id',
         'output',
     ];
 
@@ -65,5 +66,15 @@ class Cronjob extends Eloquent
     public function onCachedEvent()
     {
         cache()->tags('cronjob')->flush();
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(config('dashing.Models.Brand'))->withDefault(['name' => null]);
+    }
+
+    public function setBrandIdAttribute($value)
+    {
+        return $this->brand_id = $value == '' ? 0: $value;
     }
 }
