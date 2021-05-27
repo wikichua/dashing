@@ -1,6 +1,7 @@
 <x-dashing::guest-layout>
     <x-dashing::auth-card>
         <x-slot name="message">
+            <h2>{{ __('Greeting') .' '.  auth()->user()->name }}</h2>
             {{ __('Please confirm your password before continuing.') }}
         </x-slot>
 
