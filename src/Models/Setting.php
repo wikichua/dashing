@@ -130,7 +130,7 @@ class Setting extends Model
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = sset($this->id) ? route('setting.show', $this->id):'';
+        return $this->readUrl = isset($this->id) ? route('setting.show', $this->id):'';
     }
 
     public function onCachedEvent()

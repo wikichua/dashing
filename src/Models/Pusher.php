@@ -57,7 +57,7 @@ class Pusher extends Model
     public function getReadUrlAttribute($value)
     {
         if (\Route::has('pusher.show')) {
-            return $this->readUrl = sset($this->id) ? route('pusher.show', $this->id):'';
+            return $this->readUrl = isset($this->id) ? route('pusher.show', $this->id):'';
         }
 
         return '';
