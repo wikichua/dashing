@@ -57,7 +57,7 @@ class Permission extends Model
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = sset($this->id) ? route('permission.show', $this->id):'';
+        return $this->readUrl = isset($this->id) ? route('permission.show', $this->id):'';
     }
 
     public function onCachedEvent()
