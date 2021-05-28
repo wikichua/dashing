@@ -86,6 +86,9 @@ class VersionizerController extends Controller
                 }
             }
         }
+        $model->reverted_at = \Carbon\Carbon::now();
+        $model->reverted_by = auth()->user()->id;
+        $model->save();
 
         return response()->json([
             'status' => 'success',
