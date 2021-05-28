@@ -71,7 +71,7 @@ class VersionizerController extends Controller
     public function revert(Request $request, $id)
     {
         $model = app(config('dashing.Models.Versionizer'))->query()->findOrFail($id);
-        $revertModel = app($model->model)->whereId($model->model_id);
+        $revertModel = app($model->model_class)->whereId($model->model_id);
         $checkModel = (clone $revertModel)->first();
         if ($checkModel && 'Updated' == $model->mode) {
             $revertModel->update($model->data);
