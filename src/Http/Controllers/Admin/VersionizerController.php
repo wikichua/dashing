@@ -48,7 +48,7 @@ class VersionizerController extends Controller
         $html = [
             ['title' => 'Created At', 'data' => 'created_at', 'sortable' => true],
             ['title' => 'Mode', 'data' => 'mode', 'sortable' => true],
-            ['title' => 'Model', 'data' => 'model', 'sortable' => true],
+            ['title' => 'Model', 'data' => 'model_class', 'sortable' => true],
             ['title' => 'Model ID', 'data' => 'model_id', 'sortable' => true],
             ['title' => 'Changes', 'data' => 'changes', 'sortable' => true],
             ['title' => '', 'data' => 'actionsView'],

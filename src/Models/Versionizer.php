@@ -14,7 +14,7 @@ class Versionizer extends Model
     protected $fillable = [
         'id',
         'mode',
-        'model',
+        'model_class',
         'model_id',
         'data',
         'changes',
@@ -37,6 +37,11 @@ class Versionizer extends Model
     public function brand()
     {
         return $this->belongsTo(config('dashing.Models.Brand'))->withDefault(['name' => null]);
+    }
+
+    public function model()
+    {
+        return $this->model_class ? app($this->model_class)->find($this->model_id) : null;
     }
 
     public function getRevertedAtAttribute($value)
@@ -62,7 +67,7 @@ class Versionizer extends Model
         return $query->whereRaw('`data` RLIKE ":\.*?('.implode('|', $searches).')\.*?"');
     }
 
-    public function scopeFilterDirty($query, $search)
+    public function scopeFilterChanges($query, $search)
     {
         $searches = [
             $search,
@@ -72,6 +77,6 @@ class Versionizer extends Model
             ucwords($search),
         ];
 
-        return $query->whereRaw('`dirty` RLIKE ":\.*?('.implode('|', $searches).')\.*?"');
+        return $query->whereRaw('`changes` RLIKE ":\.*?('.implode('|', $searches).')\.*?"');
     }
 }
