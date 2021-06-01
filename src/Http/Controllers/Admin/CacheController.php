@@ -26,7 +26,7 @@ class CacheController extends Controller
         if ($request->ajax()) {
             $items = array_map(function ($value) {
                 return json_decode($value);
-            }, cache()->get('LogKeys'));
+            }, cache()->get('LogKeys', []));
             $models = (new Collection(array_values($items)));
             if ('' != $request->get('filters', '')) {
                 parse_str(json_decode($request->get('filters', ''), 1)['filter'], $filters);

@@ -11,9 +11,9 @@ class MailerController extends Controller
     {
         $this->middleware(['auth_admin', 'can:access-admin-panel']);
         $this->middleware('intend_url')->only(['index', 'read']);
-        $this->middleware('can:Read Mailers')->only(['index', 'read']);
-        $this->middleware('can:Update Mailers')->only(['edit', 'update']);
-        $this->middleware('can:Delete Mailers')->only('destroy');
+        $this->middleware('can:read-mailers')->only(['index', 'read']);
+        $this->middleware('can:update-mailers')->only(['edit', 'update']);
+        $this->middleware('can:delete-mailers')->only('destroy');
         if (false == app()->runningInConsole()) {
             \Breadcrumbs::for('home', function ($trail) {
                 $trail->push('Mailer Listing', route('mailer'));
@@ -100,7 +100,7 @@ class MailerController extends Controller
             'link' => $model->readUrl,
             'message' => 'Mailer Updated. ('.$model->name.')',
             'sender_id' => auth()->id(),
-            'receiver_id' => permissionUserIds('Read Mailers'),
+            'receiver_id' => permissionUserIds('read-mailers'),
             'icon' => $model->menu_icon,
         ]);
 
@@ -121,7 +121,7 @@ class MailerController extends Controller
             'link' => null,
             'message' => 'Mailer Deleted. ('.$model->name.')',
             'sender_id' => auth()->id(),
-            'receiver_id' => permissionUserIds('Read Mailers'),
+            'receiver_id' => permissionUserIds('read-mailers'),
             'icon' => $model->menu_icon,
         ]);
         $model->delete();
