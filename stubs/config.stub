@@ -403,7 +403,7 @@ return [
                 ],
             'list' => false,
             'search' => false,
-            'migration' => 'integer:{%field%}|nullable|default:0',
+            'migration' => 'json:{%field%}|nullable|default:0',
             'validation' => [
                 'create' => 'required',
                 'update' => 'required',

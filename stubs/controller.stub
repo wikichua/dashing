@@ -105,6 +105,7 @@ class {%model_class%}Controller extends Controller
             $trail->parent('home');
             $trail->push('Show {%model_string%}');
         });
+        $model = $model->with(['creator','modifier']);
         return view($this->page_path.'{%model_variable%}.show', compact('model'));
     }
 
@@ -114,6 +115,7 @@ class {%model_class%}Controller extends Controller
             $trail->parent('home');
             $trail->push('Edit {%model_string%}');
         });
+        $model = $model->with(['creator','modifier']);
         return view($this->page_path.'{%model_variable%}.edit', compact('model'));
     }
 

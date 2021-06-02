@@ -1,6 +1,5 @@
-@props(['id','value','label','type','name'])
+@props(['id','value' => '','label','type','name'])
 @php
-	$value = isset($value)? $value:'';
     if (!is_array($value) && !is_object($value))
     {
         $value = trim($value);
@@ -16,23 +15,21 @@
                 @break
             @case('image')
                 @if (is_array($value))
-                    @forelse ($value as $k => $v)
-                        <li class="list-unstyled"><img src="{{ asset(trim($v)) }}" style="max-height:50px;" /></li>
-                    @empty
-                        Null
-                    @endforelse
+                    @foreach ($value as $k => $v)
+                        <li class="list-unstyled"><img src="{{ asset('storage/'.trim($v)) }}" style="max-height:50px;" /></li>
+                    @endforeach
+                @else
+                <img src="{{ asset('storage/'.trim($value)) }}" style="max-height:50px;" />
                 @endif
-                <img src="{{ asset(trim($value)) }}" style="max-height:50px;" />
                 @break
             @case('file')
                 @if (is_array($value))
-                    @forelse ($value as $k => $v)
-                        <li class="list-unstyled"><a target="_blank" href="{{ asset(trim($v)) }}">{{ trim($value) }}</a></li>
-                    @empty
-                        Null
-                    @endforelse
+                    @foreach ($value as $k => $v)
+                        <li class="list-unstyled"><a target="_blank" href="{{ asset('storage/'.trim($v)) }}">{{ trim($value) }}</a></li>
+                    @endforeach
+                @else
+                <a target="_blank" href="{{ asset('storage/'.trim($value)) }}">{{ trim($value) }}</a>
                 @endif
-                <a target="_blank" href="{{ asset(trim($value)) }}">{{ trim($value) }}</a>
                 @break
             @case('editor')
                 {!! trim($value) !!}
@@ -44,11 +41,9 @@
                 {!! implode('<br>', $value) !!}
                 @break
             @case('json') {{-- special for key-paired --}}
-                @forelse ($value as $k => $v)
+                @foreach ($value as $k => $v)
                     <li class="list-unstyled">{!! $k !!} : {!! is_array($v)? '<pre class="text-muted">'.(json_encode($v,JSON_PRETTY_PRINT)).'</pre>':$v !!}</li>
-                @empty
-                    Null
-                @endforelse
+                @endforeach
                 @break
             @case('code')
                     @if (!is_array($value) && json_decode($value))
