@@ -16,7 +16,7 @@ class PageController extends Controller
         $this->middleware('can:read-pages')->only(['index', 'read', 'preview']);
         $this->middleware('can:update-pages')->only(['edit', 'update']);
         $this->middleware('can:delete-pages')->only('destroy');
-        $this->middleware('can:Migrate Pages')->only('migration');
+        $this->middleware('can:migrate-pages')->only('migration');
 
         $this->middleware('reauth_admin')->only(['edit', 'destroy']);
         if (false == app()->runningInConsole()) {

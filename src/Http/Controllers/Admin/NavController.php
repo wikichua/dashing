@@ -15,7 +15,7 @@ class NavController extends Controller
         $this->middleware('can:read-navs')->only(['index', 'read', 'preview']);
         $this->middleware('can:update-navs')->only(['edit', 'update']);
         $this->middleware('can:delete-navs')->only('destroy');
-        $this->middleware('can:Migrate-navs')->only('migration');
+        $this->middleware('can:migrate-navs')->only('migration');
         if (false == app()->runningInConsole()) {
             \Breadcrumbs::for('home', function ($trail) {
                 $trail->push('Nav Listing', route('nav'));
