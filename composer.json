@@ -63,7 +63,6 @@
                 "Wikichua\\Dashing\\DashingServiceProvider",
                 "Wikichua\\Dashing\\Providers\\HelpServiceProvider",
                 "Wikichua\\Dashing\\Providers\\BrandServiceProvider",
-                "Wikichua\\Dashing\\Providers\\CollectionPaginationServiceProvider",
                 "Wikichua\\Dashing\\Providers\\ValidatorServiceProvider"
             ],
             "aliases": {
