@@ -35,5 +35,9 @@
         "summernote": "^0.8.18",
         "sweetalert2": "^10.16.7",
         "tom-select": "^1.6.2"
+    },
+    "dependencies": {
+        "crypto-js": "^4.1.1",
+        "php-serialize": "^4.0.2"
     }
 }

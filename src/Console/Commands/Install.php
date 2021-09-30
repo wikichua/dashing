@@ -47,6 +47,7 @@ class Install extends Command
         $this->injectUseArtisanTraitIntoConsoleKernel();
         $this->injectDisableCommandsCallConsoleKernel();
         $this->injectLogCacheKeyInEventListener();
+        $this->injectMixAppNameInEnvFile();
         $this->removeDefaultWebRoute();
         if ($this->option('no-compiled') != true) {
             $this->dumpComposer();
@@ -237,6 +238,27 @@ class Install extends Command
                 @File::replace($file, implode(PHP_EOL, $lines));
                 $this->info('Replace '.trim($from).' to '. trim($to) . ' in ' . $file);
                 $this->newLine();
+            }
+        }
+    }
+    protected function injectMixAppNameInEnvFile()
+    {
+        $files = [base_path('.env.example'), base_path('.env')];
+        foreach ($files as $file) {
+            $content = @File::get($file);
+            if (!str_contains($content, 'MIX_APP_KEY')) {
+                $lines = explode(PHP_EOL, $content);
+                foreach ($lines as $key => $line) {
+                    if (str_contains($line, 'APP_DEBUG')) {
+                        $from = $line;
+                        $to = $lines[$key] = 'MIX_APP_KEY="${APP_KEY}"'.PHP_EOL.$line;
+                    }
+                }
+                if (isset($from)) {
+                    @File::replace($file, implode(PHP_EOL, $lines));
+                    $this->info('Replace '.trim($from).' to '. trim($to) . ' in ' . $file);
+                    $this->newLine();
+                }
             }
         }
     }
