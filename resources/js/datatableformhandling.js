@@ -1,6 +1,7 @@
 let url = '';
 let currentUrl = '';
 let listTable;
+let overlayLoader = document.querySelector('#overlayLoader');
 
 const loadDatatable = function(url, filters, take) {
     let parameters = {};
@@ -13,7 +14,7 @@ const loadDatatable = function(url, filters, take) {
     axios.get(url, {
         params: parameters,
         onUploadProgress: function(progressEvent) {
-            $('#overlayLoader').show();
+            overlayLoader.style.display = '';
         },
     }).then((response) => {
         let resp = response.data;
@@ -34,7 +35,7 @@ const loadDatatable = function(url, filters, take) {
     }).catch((error) => {
         // console.error(error);
     }).finally(() => {
-        $('#overlayLoader').hide();
+        overlayLoader.style.display = 'none';
     });
 };
 const flashMessage = function() {
@@ -95,7 +96,7 @@ const fireRequest = function(form, action) {
             'X-Requested-With': 'XMLHttpRequest'
         },
         onUploadProgress: function(progressEvent) {
-            $('#overlayLoader').show();
+            overlayLoader.style.display = '';
         },
     }).then((response) => {
         let resp = response.data;
@@ -131,7 +132,7 @@ const fireRequest = function(form, action) {
         });
     }).finally(() => {
         // TODO
-        $('#overlayLoader').hide();
+        overlayLoader.style.display = 'none';
     });
 }
 const webPush = function (title, message, icon, link, timeout) {
@@ -166,10 +167,11 @@ const toastPush = function (title, message, icon, link, timeout) {
         html: message,
     });
 }
-$(document).ready(function() {
+
+document.addEventListener("DOMContentLoaded", function() {
     // display flash-message
     _.attempt(flashMessage);
-    $('#overlayLoader').hide();
+    overlayLoader.style.display = 'none';
     // datatable
     if (_.isUndefined(url) === false) {
         listTable = $('.bootstrap-table').bootstrapTable({
